@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "element-ui": "^2.15.10",
+    "qs": "^6.11.0"
+  },
+  "devDependencies": {
+    "postcss-px-to-viewport": "^1.1.1"
+  }
+}
