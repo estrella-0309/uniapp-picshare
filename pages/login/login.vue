@@ -13,7 +13,7 @@
 		</view>
 		<view class="btn">
 			<button class="login" @click="login">登录</button>
-			<button class="register">注册</button>
+			<button class="register" @click="toresgister">注册</button>
 		</view>
 	</view>
 </template>
@@ -31,7 +31,13 @@ import qs from 'qs'
 			}
 		},
 		methods: {
+			toresgister(){
+				uni.navigateTo({
+					url:"/pages/resgister/resgister"
+				})
+			},
 			login(){
+				let _this=this;
 				uni.request({
 					url:"http://47.107.52.7:88/member/photo/user/login",
 					method:'POST',
@@ -46,16 +52,21 @@ import qs from 'qs'
 						
 					},
 					success:res=>{
+						
 						if(res.data.code==200){
-							let result=qs.stringify(res.data.data);
+							let result=res.data.data;
+							
 							uni.showToast({
 											title: "登陆成功",
 											icon:'success',
 											duration:1000,
 							});
 							setTimeout(function(){
-								uni.navigateTo({
-									url:'/pages/index/index?'+result,
+								uni.switchTab({
+									url:'/pages/index/index?',
+									success: (res1) => {
+										_this.$store.dispatch("getUserList",result);
+									}
 								})
 							},1000)
 						}
@@ -66,13 +77,10 @@ import qs from 'qs'
 											duration:1000,
 							})
 						}
-						console.log(res);
 					},
 					fail:()=>{},
 					complete:()=>{},
-				})
-				
-				
+				})	
 			},
 		},
 		computed:{

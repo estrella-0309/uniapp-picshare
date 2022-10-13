@@ -11,7 +11,9 @@
 				<i class="iconfont eyes2" :class="Icon2" @click="flag2=!flag2"></i>
 			</view>
 			<view class="btn">
-				<button class="register" @click="resgister">注册</button>
+				<button class="register" @click="resgister" style="background-color: #fff;color: #409971;">注册</button>
+				<button class="register" @click="tologin">返回登录</button>
+				
 			</view>
 		</view>
 	</view>
@@ -29,6 +31,11 @@
 			}
 		},
 		methods: {
+			tologin(){
+				uni.navigateTo({
+					url:"/pages/login/login"
+				})
+			},
 			resgister(){ 
 				if(this.password!=this.password2){
 					uni.showToast({
@@ -186,7 +193,7 @@
 			}
 		}
 		.btn{
-			 margin-top:200rpx;
+			 margin-top:80rpx;
 			 button{
 				 width: 600rpx;
 				 border-radius: 25px;

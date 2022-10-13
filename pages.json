@@ -14,7 +14,9 @@
 		{
 			"path": "pages/index/index",
 			"style": {
-				"navigationBarTitleText": "首页"
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
 			}
 		}
 	    
@@ -22,7 +24,7 @@
             "path" : "pages/resgister/resgister",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "注册",
                 "enablePullDownRefresh": false
             }
             
@@ -31,7 +33,7 @@
             "path" : "pages/subscription/subscription",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "订阅",
                 "enablePullDownRefresh": false
             }
             
@@ -40,7 +42,7 @@
             "path" : "pages/find/find",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "发现",
                 "enablePullDownRefresh": false
             }
             
@@ -49,7 +51,7 @@
             "path" : "pages/message/message",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "消息",
                 "enablePullDownRefresh": false
             }
             
@@ -58,7 +60,7 @@
             "path" : "pages/myself/myself",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "我的",
                 "enablePullDownRefresh": false
             }
             
@@ -72,16 +74,27 @@
 	},
 	"uniIdRouter": {},
 	"tabBar": {
-		"color": "#333",
-		"selectedColor": "red",
+		"color": "#ccc",
+		"selectedColor": "#333",
 		"list":[
 			{
 				"text": "首页",
-				"pagePath": "pages/index/index"
+				"pagePath": "pages/index/index",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/home-h.png"
 			},
 			{
 				"text": "发现",
-				"pagePath": "pages/find/find"
+				"pagePath": "pages/find/find",
+				"iconPath": ""
+			},
+			{
+				"text": "发布",
+				"pagePath": "pages/issue/issue"
+			},
+			{
+				"text": "我的",
+				"pagePath": "pages/myself/myself"
 			}
 		]
 	},
