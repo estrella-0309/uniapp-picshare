@@ -25,9 +25,7 @@ const state={
 		}
 	}
 	const actions={
-		getUserList({commit},data){
-			console.log(data,88);
-			
+		getUserList({commit},data){			
 			commit("GETUSERLIST",data)
 		}
 	}

@@ -1,62 +1,71 @@
 <template>
 	<view class="app">
-		<view v-for="item in list">
-			<view class="index-list" 
-			 v-for="(item2,index) in item.imageUrlList" 
-			  :key="index">
-			  <view class="header">
-			  	<view class="header-left" >
-			  			<img  src="static/default.jpg" alt="">		
-			  			<view>{{item.username}}</view>						
-			  	</view>
-			  	<view class="header-right">
-			  		<view>关注</view>
-			  		<img src="static/checked.png" alt="" style="width: 40px;">
-			  	</view>			  	
-			  </view>
-			  <view class="mid" >
-			  	<img :src="item2" alt="">
-			  </view>
-			  <view class="footer">
-				  <view class="footer-left">
-				  	<view class="title">
-				  		{{item.title}}
+		<template v-if="!isempty">
+			<view v-for="item in list">
+				<view class="index-list" 
+				 v-for="(item2,index) in item.imageUrlList" 
+				  :key="index">
+				  <view class="header">
+				  	<view class="header-left" >
+				  			<img  src="static/default.jpg" alt="">		
+				  			<view>{{item.username}}</view>						
 				  	</view>
-				  	<view class="content">
-				  		{{item.content}}
-				  	</view>
+				  	<view class="header-right" @click="attention(item.pUserId)">
+				  		<view>关注</view>
+				  		<img src="attentioned" alt="" style="width: 40px;">
+				  	</view>			  	
 				  </view>
-				  
-					<view class="goodandcollect">
-						<view class="good">
-							<view class="goodnums">
-								666
+				  <view class="mid" >
+				  	<img :src="item2" alt="">
+				  </view>
+				  <view class="footer">
+					  <view class="footer-left">
+					  	<view class="title">
+					  		{{item.title}}
+					  	</view>
+					  	<view class="content">
+					  		{{item.content}}
+					  	</view>
+					  </view>
+					  
+						<view class="goodandcollect">
+							<view class="good">
+								<view class="goodnums">
+									666
+								</view>
+								<img src="static/good.png" alt="">
 							</view>
-							<img src="static/good.png" alt="">
-						</view>
-						<view class="good">
-							<view class="collectnums">
-								666
+							<view class="good">
+								<view class="collectnums">
+									666
+								</view>
+								<img src="static/collect.png" alt="">
 							</view>
-							<img src="static/collect.png" alt="">
 						</view>
-					</view>
-					
-			  </view>
-			</view>
-			  </view>
+						
+				  </view>
+				</view>
+				  </view>
+		</template>
+		<template v-else>
+			<view class="empty"><img src="static/哭脸-h.png" alt=""><view >
+				没有关注任何人，请去发现页发现自己感兴趣的内容
+			</view></view>
+		</template>
 		</view>
 	
 </template>
 
 <script>
-	import {mapState} from "vuex"
+import {mapState} from "vuex"
 import loginVue from "../login/login.vue";
 	export default {
 		data() {
 			return {
+				isempty:false,
+				isattention:true,
 				page:1,
-				flag:true,
+				
 				list:[],
 			}
 		},
@@ -73,6 +82,39 @@ import loginVue from "../login/login.vue";
 			this.getData();
 		},
 		methods: {
+			attention(focusUserId){
+				if(this.isattention){
+					uni.request({
+						url:'http://47.107.52.7:88/member/photo/focus/cancel',
+						method:'POST',
+						header:{
+							  "Accept": "application/json, text/plain, */*",
+							  "Content-Type": "application/x-www-form-urlencoded",
+							  // "appId": "24d8ed2ab0444b048cbd5fcdde289109",
+							  "appId": "d39fc189485c43d9a4b37463b238ac84",
+							  // "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
+							  "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
+						},
+						data:{
+							focusUserId:focusUserId,
+							userId:this.id,
+						},
+						success:res =>{
+							if(res.data.code==200){
+								this.list=rhis.list.filter(item=> item.pUserId!=focusUserId);
+							}
+							
+						}
+					})
+				}
+				else{
+					uni.request({
+						url:'http://47.107.52.7:88/member/photo/focus',
+						
+					})
+				}
+				
+			},
 			init(){
 				uni.request({
 					url:'http://47.107.52.7:88/member/photo/focus',
@@ -91,9 +133,11 @@ import loginVue from "../login/login.vue";
 						userId:this.id
 					},
 					success:res=>{
-						
 						 if(res.data.code==200){
-		
+							if(res.data.data==null){
+								this.isempty=true
+								return;
+							}
 							if(parseInt(res.data.data.current)*parseInt(res.data.data.size)>parseInt(res.data.data.total)){
 								uni.showToast({
 												title:'没有关注的内容了',
@@ -105,10 +149,7 @@ import loginVue from "../login/login.vue";
 							else{
 								this.list=res.data.data.records;
 								this.page++;
-							}
-							console.log(this.list,"list");
-							// this.list.push.apply(this.list,res.data.data.records);
-							
+							}	
 						} 
 						else{
 							uni.showToast({
@@ -138,7 +179,7 @@ import loginVue from "../login/login.vue";
 						userId:this.id
 					},
 					success:res=>{
-						console.log(res)
+						console.log(res);
 						if(res.data.code==200){
 							this.list.push.apply(this.list,res.data.data.records);
 							this.page++;
@@ -148,12 +189,7 @@ import loginVue from "../login/login.vue";
 			}
 		},
 		computed:{
-			underline(){
-				return this.flag?"active":"";
-			},
-			underline2(){
-				return !this.flag?"active":"";
-			},
+			
 			...mapState({
 				id:state=>state.user.id,
 				username:state=>state.user.username,
@@ -170,6 +206,20 @@ import loginVue from "../login/login.vue";
 </script>
 
 <style scoped lang="scss">
+	.empty{
+		
+		position: absolute;
+		top: 30%;
+		view{
+			color: #ccc;
+		}
+		img{
+			margin: 30rpx 280rpx;
+			width: 200rpx;
+			height: 200rpx;
+		
+		}
+	}
 	.app{
 		float: left;
 		background-color: #f0f0f0;
