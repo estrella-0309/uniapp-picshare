@@ -1,6 +1,6 @@
 <template>
 	<view>
-		fabu
+		fabu111
 	</view>
 </template>
 

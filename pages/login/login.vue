@@ -19,8 +19,7 @@
 </template>
 
 <script>
-import loginVue from './login.vue'
-import qs from 'qs'
+	import{Login} from '@/api/index/index.js'
 	export default {
 		data() {
 			return {
@@ -36,51 +35,9 @@ import qs from 'qs'
 					url:"/pages/resgister/resgister"
 				})
 			},
-			login(){
-				let _this=this;
-				uni.request({
-					url:"http://47.107.52.7:88/member/photo/user/login",
-					method:'POST',
-					header:{
-						  "Accept": "application/json, text/plain, */*",
-						  "Content-Type": "application/x-www-form-urlencoded",
-						  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-						  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0"
-					},
-					data:{
-						username:this.username,password:this.password
-						
-					},
-					success:res=>{
-						
-						if(res.data.code==200){
-							let result=res.data.data;
-							
-							uni.showToast({
-											title: "登陆成功",
-											icon:'success',
-											duration:1000,
-							});
-							setTimeout(function(){
-								uni.switchTab({
-									url:'/pages/index/index?',
-									success: (res1) => {
-										_this.$store.dispatch("getUserList",result);
-									}
-								})
-							},1000)
-						}
-						else if(res.data.code==500){
-							uni.showToast({
-											title: "用户名或密码错误",
-											icon:'error',
-											duration:1000,
-							})
-						}
-					},
-					fail:()=>{},
-					complete:()=>{},
-				})	
+			async login(){
+				let result=Login(this.username,this.password);
+				console.log(result)
 			},
 		},
 		computed:{
