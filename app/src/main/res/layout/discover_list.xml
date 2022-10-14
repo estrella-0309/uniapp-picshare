@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_margin="8dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/iconhead"/>
+
+        <TextView
+            android:id="@+id/tv_userName"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@+id/iv_head"
+            android:text="userName"
+            />
+        <ImageButton
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toRightOf="@id/tv_userName"
+            android:scaleType="centerCrop"
+            android:src="@drawable/focus"/>
+
+        <ImageView
+            android:id="@+id/iv_pic"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/iv_head"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/iv_pic"
+            android:textSize="20sp"
+            android:text="title" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/tv_title"
+            android:text="content"
+            />
+
+            <TextView
+                android:id="@+id/tv_like"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@+id/tv_content"
+                android:text="0"
+                android:layout_toLeftOf="@+id/iv_like"
+                />
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/zan1"
+                android:layout_below="@+id/tv_content"
+                android:layout_toLeftOf="@id/tv_collect"
+                />
+
+            <TextView
+                android:id="@+id/tv_collect"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:text="0"
+                android:layout_below="@+id/tv_content"
+                android:layout_toLeftOf="@id/iv_collect"
+                android:layout_marginLeft="10dp"/>
+
+        <ImageView
+            android:id="@+id/iv_collect"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@+id/tv_content"
+            android:layout_alignRight="@id/iv_pic"
+            android:src="@drawable/collect" />
+
+    </RelativeLayout>
+
+
+
+
+</androidx.cardview.widget.CardView>
