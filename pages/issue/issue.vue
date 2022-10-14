@@ -70,8 +70,13 @@
 			}
 		},
 		methods: {
-			 submitUpload() {
-			        this.$refs.upload.submit();
+			 // submitUpload() {
+			 //        this.$refs.upload.submit();
+			 //      },
+				  submitUpload() {
+			         let fieldData=this.uploadData.fieldData;
+					 this.fileData = new FormData(); // new formData对象
+					 this.$refs.upload.submit(); 
 			      },
 			      handleRemove(file, fileList) {
 			        console.log(file, fileList);
