@@ -1,8 +1,5 @@
 <template>
 	<view class="box">
-		<div class="summit">
-			<u-button type="primary" ripple="true" ripple-bg-color="red">提交</u-button>
-			</div>
 		<view class="msg">
 			<view class="title">
 				标题：
@@ -28,29 +25,20 @@
 				上传照片（不能超过9张）
 			</view>
 			<el-upload
-			  action="#"
-			  list-type="picture-card"
+			  class="upload-demo"
+			  ref="upload"
+			  action="http://47.107.52.7:88/member/photo/image/upload"
+			  :on-preview="handlePreview"
+			  :on-remove="handleRemove"
+			  :file-list="fileList"
+			  :headers="headerObj"
+			  :http-request="uploadFile"
 			  :auto-upload="false"
-			  :limit="9"
-			 
-			  :on-success="(response, file, fileList)=>{return onSuccess(response, file, fileList, index)}"
+			  multiple
 			  >
-			    <i slot="default" class="el-icon-plus"></i>
-			    <div slot="file" slot-scope="{file}">
-			      <img
-			        class="el-upload-list__item-thumbnail"
-			        :src="file.url" alt=""
-			      >
-			      <span class="el-upload-list__item-actions">
-			        <span
-			          v-if="!disabled"
-			          class="el-upload-list__item-delete"
-			          @click="handleRemove(file)"
-			        >
-			          <i class="el-icon-delete"></i>
-			        </span>
-			      </span>
-			    </div>
+			  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+			  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+			  <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
 			</el-upload>
 		</view>
 		
@@ -58,21 +46,52 @@
 </template>
 
 <script>
+	import{Upload} from '@/api/index/index.js'
 	export default {
 		data() {
 			return {
 				disabled: false,
 				title:'',
 				content:'',
-				formList: [{ pics: [] }]
+				//  fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}],
+				// headerObj:{
+				// 	"Accept": "application/json, text/plain, */*",
+				// 	"Content-Type": "multipart/form-data",
+				// 	"appId": "24d8ed2ab0444b048cbd5fcdde289109",
+				// 	"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
+				// } ,
+				fileData: '', // 文件上传数据（多文件合一）
+						fileList: [],  // upload多文件数组
+						uploadData: {
+				     fieldData: {
+				      id: '', // 机构id,
+				     }
+				    },
 			}
 		},
 		methods: {
-			 onSuccess(response, file, fileList, idx) {
-			      // 这里是element的上传地址，对应的name,url,自己打印fileList对照
-				  console.log(fileList,this.formList);
-			      this.formList[idx].pics.push({ name: file.name, url: file.url });
-			    },
+			 submitUpload() {
+			        this.$refs.upload.submit();
+			      },
+			      handleRemove(file, fileList) {
+			        console.log(file, fileList);
+			      },
+			      handlePreview(file) {
+			        console.log(file);
+			      },
+				  uploadFile(file) {
+				  		  this.fileData.append('files', file.file); // append增加数据
+				  	},
+			// async upLoadFile(data){
+			// 	console.log(data,"in")
+			// 	const file=data.file;
+			// 	const form=new FormData();
+			// 	console.log(file,"file");
+			// 	form.append("file",file);
+			// 	let result=await Upload(form);
+			// 	console.log(result)
+				
+			// }
 		}
 	}
 </script>
@@ -84,7 +103,6 @@
 /deep/ .el-upload--picture-card{
 	width: 200rpx;
 	height: 200rpx;
-	
 	i{
 		position: relative;
 		top: -40rpx;
@@ -100,7 +118,7 @@
 			width: 750rpx;
 			position: fixed;
 			bottom: 100rpx;
-			
+			left: 0;
 		}
 		.msg {
 			margin:50rpx 20rpx;
