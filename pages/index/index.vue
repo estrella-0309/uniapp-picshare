@@ -5,8 +5,10 @@
 				  :key="item.id">
 				  <view class="header">
 				  	<view class="header-left" >
-				  			<img  src="static/default.jpg" alt="">		
-				  			<view>{{item.username}}</view>						
+						<view class="avator" >	
+							<u-avatar :text="item.username.substr(0,1)" size="55"></u-avatar>
+						</view>
+				  			<view class="username">{{item.username}}</view>						
 				  	</view>
 				  	<view class="header-right" @click="attention(item)">
 				  		<view>关注</view>
@@ -60,7 +62,7 @@ import collect from '@/static/collect-h.png'
 export default {
 			data() {
 				return {
-
+					text:"无",
 					Unchecked:Unchecked,
 					checked:checked,
 					Uncollect:Uncollect,
@@ -404,21 +406,21 @@ export default {
 				.header-left{
 					float: left;
 					width: 300rpx;
-					padding: 15rpx;
-					img{
-						width: 120rpx;
-						height: 120rpx;
-						border-radius:50%;
+					padding: 30rpx 30rpx;
+					position: absolute;
+					.avator{
+						position: relative;
+						width: 100rpx;
+					
 					}
-					view{
+					.username{
 						font-size: 20px;
 						font-weight: 700;
 						position: relative;
-						top:-40rpx;
-						left:23rpx;
+						top:-85rpx;
+						left:140rpx;
 						display: inline-block;
-						height: 150rpx;
-						line-height: 220rpx;
+		
 					}
 				}
 				.header-right{

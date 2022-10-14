@@ -63,7 +63,11 @@
 			</view>
 		</view>
 		 <div class="footer">
-			 
+			 <el-tabs v-model="activeName" @tab-click="handleClick" stretch>
+			     <el-tab-pane label="关注" name="first">关注</el-tab-pane>
+			     <el-tab-pane label="喜欢" name="second">喜欢</el-tab-pane>
+			     <el-tab-pane label="收藏" name="third">收藏</el-tab-pane>
+			   </el-tabs>
 		 </div>
 	</view>
 	
@@ -73,11 +77,13 @@
 	export default {
 		data() {
 			return {
-				
+				activeName: 'second'
 			}
 		},
 		methods: {
-			
+			 handleClick(tab, event) {
+			        console.log(tab, event);
+			      }
 		}
 	}
 </script>
@@ -194,7 +200,8 @@
 		}
 		.footer{
 			width: 750rpx;
-
+			position: relative;
+			top: 600rpx;
 		}
 	}
 </style>

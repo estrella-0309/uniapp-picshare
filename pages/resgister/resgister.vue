@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import{Register} from '@/api/index/index.js'
 	export default {
 		data() {
 			return {
@@ -36,7 +37,7 @@
 					url:"/pages/login/login"
 				})
 			},
-			resgister(){ 
+			async resgister(){ 
 				if(this.password!=this.password2){
 					uni.showToast({
 									title: "两次输入密码不相同！",
@@ -45,52 +46,27 @@
 					});
 					return;
 				}
-				
-				uni.request({
-					url:"http://47.107.52.7:88/member/photo/user/register",
-					method:'POST',
-					header:{
-						  "Accept": "application/json, text/plain, */*",
-						  "Content-Type": "application/json",
-						  // "appId": "24d8ed2ab0444b048cbd5fcdde289109",//jiangtingwei
-						  // "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-						  "appId": "d39fc189485c43d9a4b37463b238ac84",//lz
-						  "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-					},
-					data:{
-						username:this.username,password:this.password
-						
-					},
-				
-					success:res=>{
-						
-						if(res.data.code==200){
-							
-							uni.showToast({
-											title: "注册成功",
-											icon:'success',
-											duration:1000,
-							});
-							setTimeout(function(){
-								uni.navigateTo({
-									url:'/pages/login/login'
-								})
-							},1000)
-							uni.navigateTo({
-								url:'pages/login/login'
-							})
-						}
-						else if(res.data.code==500){
-							uni.showToast({
-											title: res.data.msg,
-											icon:'error',
-											duration:1000,
-							})
-						}
-					},
-					fail:()=>{},
-					complete:()=>{},
-				})
+				let result=await Register(this.username,this.password);
+				if(result.code==200){
+					uni.showToast({
+									title: "注册成功",
+									icon:'success',
+									duration:1000,
+					});
+					setTimeout(function(){
+						uni.navigateTo({
+							url:'/pages/login/login'
+						})
+					},1000)
+				}
+				else if(result.code==500){
+					uni.showToast({
+									title: result.msg,
+									icon:'error',
+									duration:1000,
+					})
+				}
+			
 			}
 		},
 		computed:{

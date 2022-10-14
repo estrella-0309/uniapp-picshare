@@ -36,8 +36,22 @@
 				})
 			},
 			async login(){
-				let result=Login(this.username,this.password);
-				console.log(result)
+				let result=await Login(this.username,this.password)
+				if(result.code==200){
+					this.$store.dispatch("getUserList",result.data);
+					
+					uni.showToast({
+						title:'登录成功',
+						icon:'success',
+						duration: 1000
+					})	
+					setTimeout(function(){
+						uni.switchTab({
+							url:"/pages/index/index"
+						})
+					},1000)
+				}
+				
 			},
 		},
 		computed:{
