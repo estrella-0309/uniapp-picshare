@@ -32,6 +32,8 @@
 			  list-type="picture-card"
 			  :auto-upload="false"
 			  :limit="9"
+			 
+			  :on-success="(response, file, fileList)=>{return onSuccess(response, file, fileList, index)}"
 			  >
 			    <i slot="default" class="el-icon-plus"></i>
 			    <div slot="file" slot-scope="{file}">
@@ -59,17 +61,18 @@
 	export default {
 		data() {
 			return {
-				dialogImageUrl: '',
-				dialogVisible: false,
 				disabled: false,
 				title:'',
 				content:'',
+				formList: [{ pics: [] }]
 			}
 		},
 		methods: {
-			handleRemove(file) {
-			        console.log(file);
-			},
+			 onSuccess(response, file, fileList, idx) {
+			      // 这里是element的上传地址，对应的name,url,自己打印fileList对照
+				  console.log(fileList,this.formList);
+			      this.formList[idx].pics.push({ name: file.name, url: file.url });
+			    },
 		}
 	}
 </script>
@@ -81,6 +84,7 @@
 /deep/ .el-upload--picture-card{
 	width: 200rpx;
 	height: 200rpx;
+	
 	i{
 		position: relative;
 		top: -40rpx;
@@ -89,12 +93,13 @@
 /deep/ .el-upload-list__item  {
 	  width: 200rpx;
 	  height: 200rpx;
+	  margin-right: 31rpx;
 	}
 	.box{
 		.summit{
 			width: 750rpx;
-			position: absolute;
-			bottom: 50rpx;
+			position: fixed;
+			bottom: 100rpx;
 			
 		}
 		.msg {
@@ -109,6 +114,7 @@
 				color: #ccc;
 			}
 			img{
+				
 				width: 200rpx;
 				height: 200rpx;
 			}
