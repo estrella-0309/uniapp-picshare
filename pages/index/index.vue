@@ -37,13 +37,13 @@
 								<view class="goodnums">
 									{{item.likeNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasLike?good:Ungood" @click="GetLike(item)" alt=""></image>
+								<image class="iconimg-2" :src="item.hasLike?good:Ungood" @click="ClickLike(item,id)" alt=""></image>
 							</view>
 							<view class="good">
 								<view class="collectnums">
 									{{item.collectNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect" @click="GetCollect(item)" alt="">
+								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect" @click="ClickCollect(item,id)" alt="">
 							</view>
 						</view>
 						
@@ -63,7 +63,7 @@ import Uncollect from '@/static/collect.png'
 import collect from '@/static/collect-h.png'
 import Checked from '@/mixins/index.js'
 export default {
-			// mixins: [feedMixin],
+			mixins: [Checked],
 			data() {
 				return {
 					text:"无",
@@ -89,228 +89,7 @@ export default {
 			onReachBottom(){
 				this.getData();
 			},
-			methods: {	
-				detail(shareid){
-					console.log(shareid,"shareid",this.id)
-					uni.request({
-						url:'http://47.107.52.7:88/member/photo/share/detail',
-						method:'GET',
-						header:{
-							"Accept": "application/json, text/plain, */*",
-							"Content-Type": "application/x-www-form-urlencoded",
-							"appId": "24d8ed2ab0444b048cbd5fcdde289109",
-							// "appId": "d39fc189485c43d9a4b37463b238ac84",
-							"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-							// "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f
-						},
-						data:{
-							shareId:shareid,
-							userId:this.id,
-						},
-						success:res=>{
-							if(res.data.code==200){
-								this.ans=res.data.data
-							}
-						}
-					})
-					console.log(ans,"data");
-					return ans;
-				},
-				attention(item){
-					//取消关注用户
-					if(item.hasFocus){
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/focus/cancel',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								focusUserId:item.pUserId,
-								userId:this.id,
-							},
-							success:res =>{
-								if(res.data.code==200){
-									item.hasFocus=!item.hasFocus;
-									uni.showToast({
-													title:'取消关注成功',
-													icon:'error',
-													duration:1000,
-									})
-								}
-								
-							}
-						})
-					}
-					//关注该用户
-					else{
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/focus',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								"appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								focusUserId:item.pUserId,
-								userId:this.id,
-							},
-							success:res =>{
-								if(res.data.code==200){
-									item.hasFocus=!item.hasFocus;
-									uni.showToast({
-													title:"关注成功",
-													icon:'success',
-													duration:1000,
-									})
-								}
-								
-							}
-							
-						})
-					}
-					
-				},
-				GetLike(item){
-					//取消点赞
-					if(item.hasLike){
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/like/cancel',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								likeId:item.likeId
-							},
-							success:res =>{
-								if(res.data.code==200){
-									item.hasLike=!item.hasLike;
-									item.likeNum--;
-									uni.showToast({
-													title:'取消点赞成功',
-													icon:'error',
-													duration:1000,
-									})
-									
-								}
-								
-							}
-						})
-					}
-					//点赞
-					else{
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/like',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								"appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								shareId:item.id,
-								userId:this.id,
-							},
-							success:res =>{
-								if(res.data.code==200){
-									console.log(this.detail(item.id))
-									uni.showToast({
-													title:"点赞成功",
-													icon:'success',
-													duration:1000,
-									})
-								
-								}
-								
-							}
-							
-						})
-					}
-					
-				},
-				GetCollect(item){
-					//取消收藏
-					if(item.hasCollect){
-					
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/collect/cancel',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								collectId:item.collectId
-							},
-							success:res =>{
-								if(res.data.code==200){
-									item.hasCollect=!item.hasCollect;
-									uni.showToast({
-													title:'取消收藏成功',
-													icon:'error',
-													duration:1000,
-									})
-								}
-								
-							}
-						})
-					}
-					//收藏
-					else{
-						console.log(item,"shoucang")
-						uni.request({
-							url:'http://47.107.52.7:88/member/photo/collect',
-							method:'POST',
-							header:{
-								  "Accept": "application/json, text/plain, */*",
-								  "Content-Type": "application/x-www-form-urlencoded",
-								"appId": "24d8ed2ab0444b048cbd5fcdde289109",
-								"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-								  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-								  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-							},
-							data:{
-								shareId:item.id,
-								userId:this.id,
-							},
-							success:res =>{
-								if(res.data.code==200){
-									item.hasCollect=!item.hasCollect;
-									uni.showToast({
-													title:"收藏成功",
-													icon:'success',
-													duration:1000,
-									})
-								}
-								
-							}
-							
-						})
-					}
-					
-				},
+			methods: {		
 				init(){
 					uni.request({
 						url:'http://47.107.52.7:88/member/photo/focus',
@@ -358,14 +137,14 @@ export default {
 							  "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
 						},
 						data:{
-							current:this.page,
+							current:1,
 							size:10,
 							userId:this.id
 						},
 						success:res=>{
 							if(res.data.code==200){
 								this.list.push.apply(this.list,res.data.data.records);
-								this.page++;
+								this.page=0;
 							}
 							else{
 								uni.showToast({

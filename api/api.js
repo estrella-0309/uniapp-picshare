@@ -1,5 +1,5 @@
 const header={ Accept: "application/json, text/plain, */*",
-			  "Content-Type": "application/json",
+			  // "Content-Type": "application/json",
 			  appId: "24d8ed2ab0444b048cbd5fcdde289109",
 			  appSecret: "300002f6abcaf485d4cb19de0695a0b049dc0",
 			  // appId: "d39fc189485c43d9a4b37463b238ac84",
@@ -10,11 +10,14 @@ const api=(Option)=>{
 	return new Promise((resolve,reject)=>{
 		uni.showLoading({
 			title:'加载中'
-		})
+		})		
+		if(Option.hasOwnProperty('Content-Type')){
+			header['Content-Type']=Option["Content-Type"]
+		}
 		uni.request({
 			url:baseURL+Option.url,
 			method:Option.method||'GET',
-			header:Option.header||header,
+			header:header,
 			data:Option.data||{},
 			success:res=>{		
 				uni.hideLoading()

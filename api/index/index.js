@@ -4,13 +4,7 @@ export const Login=async(username,password)=>{
 	let result =await api({
 		url:'/photo/user/login',
 		method:'POST',
-		header:{ 
-			Accept: "application/json, text/plain, */*",
-			"Content-Type": "application/x-www-form-urlencoded",
-			appId: "24d8ed2ab0444b048cbd5fcdde289109",
-			appSecret: "300002f6abcaf485d4cb19de0695a0b049dc0",
-			
-		},
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			username:username,password:password
 		},
@@ -47,7 +41,7 @@ export const Collect=async(shareId,useId)=>{
 	let result =await api({
 		url:'/photo/collect',
 		method:'POST',
-	
+	"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			shareId:shareId,useId:useId
 		},
@@ -191,6 +185,7 @@ export const Getlike=async(current,userId)=>{
 	let result =await api({
 		url:'/photo/like',
 		method:'POST',
+		
 		data:{
 			current:current,
 			size:10,
@@ -204,6 +199,7 @@ export const Like=async(shareId,userId)=>{
 	let result =await api({
 		url:'/photo/like',
 		method:'POST',
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			shareId:shareId,
 			userId:userId,
@@ -215,6 +211,7 @@ export const Like=async(shareId,userId)=>{
 export const UnLike=async(likeId)=>{
 	let result =await api({
 		url:'/photo/like/cancel',
+		"Content-Type": "application/x-www-form-urlencoded",
 		method:'POST',
 		data:{
 			likeId:likeId,
