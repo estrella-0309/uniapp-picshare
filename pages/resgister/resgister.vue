@@ -6,9 +6,12 @@
 			</view>
 			<view class="user">
 				<input type="text" focus placeholder="用户名" v-model="username" adjustResize placeholder-style="color:#76c2a5"/>
-				<input :type="type" placeholder="输入密码" v-model="password" placeholder-style="color:#76c2a5" style="margin-top: 70rpx;" class="active"/>		<i class="iconfont eyes" :class="Icon" @click="flag=!flag"></i>
+				<input :type="type" placeholder="输入密码" v-model="password" placeholder-style="color:#76c2a5" style="margin-top: 70rpx;" class="active"/>	
+					<!-- <i class="iconfont eyes" :class="Icon" @click="flag=!flag"></i> -->
+					<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
 				<input :type="type2" placeholder="请再次输入密码" v-model="password2" placeholder-style="color:#76c2a5" style="margin-top: 70rpx;" class="active"/>		
-				<i class="iconfont eyes2" :class="Icon2" @click="flag2=!flag2"></i>
+				<!-- <i class="iconfont eyes2" :class="Icon2" @click="flag2=!flag2"></i> -->
+				<u-icon :name="Icon2" size="20" class="eyes2" @click="flag2= !flag2"></u-icon>
 			</view>
 			<view class="btn">
 				<button class="register" @click="resgister" style="background-color: #fff;color: #409971;">注册</button>
@@ -74,13 +77,13 @@ import{Register} from '@/api/index/index.js'
 					return this.flag?"text":"password";
 				},
 				Icon(){
-					return !this.flag?"icon-yanjing":"icon-yanjing1"
+					return !this.flag?"eye":"eye-off"
 				},
 			type2(){
 					return this.flag2?"text":"password";
 				},
 				Icon2(){
-					return !this.flag2?"icon-yanjing":"icon-yanjing1"
+					return !this.flag2?"eye":"eye-off"
 				}
 		},
 		
@@ -128,13 +131,13 @@ import{Register} from '@/api/index/index.js'
 	}
 	.eyes{
 		position: absolute;
-		top:575rpx;
+		top:555rpx;
 		right: 130rpx;
 		color: #76c2a5;
 	}
 	.eyes2{
 		position: absolute;
-		top:775rpx;
+		top:723rpx;
 		right: 130rpx;
 		color: #76c2a5;
 	}

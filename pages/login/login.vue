@@ -6,7 +6,7 @@
 		<view class="user">
 			<input type="text" focus placeholder="用户名" v-model="username" adjustResize placeholder-style="color:#76c2a5"/>
 			<input :type="type" placeholder="输入密码" v-model="password"  class="active"/>
-			<i class="iconfont eyes" :class="Icon" @click="flag=!flag"></i>
+			<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
 			<view class="user-forget">
 				<u>忘记密码?</u>
 			</view>
@@ -59,7 +59,7 @@
 				return this.flag?"text":"password";
 			},
 			Icon(){
-				return !this.flag?"icon-yanjing":"icon-yanjing1"
+				return !this.flag?"eye":"eye-off"
 			}
 		},
 	
@@ -107,9 +107,9 @@
 	}
 	.eyes{
 		position: absolute;
-		top:535rpx;
+		top:520rpx;
 		right: 130rpx;
-		color: #76c2a5;
+		
 	}
 	.box{
 		background-color: #409971;

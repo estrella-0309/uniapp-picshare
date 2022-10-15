@@ -165,18 +165,24 @@ export const UnFocus=async(focusUserId,userId)=>{
 }
 //上传文件
 export const Upload=async(fileList)=>{
-	let result =await api({
-		url:'/photo/image/upload',
-		method:'POST',
-		header:{
-				"Accept": "application/json, text/plain, */*",
-				"Content-Type": "multipart/form-data",
-				"appId": "24d8ed2ab0444b048cbd5fcdde289109",
-				"appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",						  
-		},
-		data:{
-			fileList:fileList
-		},
+	let result=await new Promise((reslove,reject)=>{
+		uni.uploadFile({
+			url:'http://47.107.52.7:88/member/photo/image/upload',
+			files:fileList,
+			fileType:"image",
+			header:{
+				  "Accept": "application/json, text/plain, */*",
+				  // "Content-Type": "multipart/form-data",
+				  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
+				  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
+			 },
+			 success :res =>{
+				 reslove(res.data)
+			 },
+			 fail:err=>{
+				 reject(err)
+			 }
+		})
 	})
 	return result
 }
