@@ -2,18 +2,17 @@
 	<view class="app">
 				<view class="index-list" 
 					v-for="item in list"
-				  :key="item.id">
+				  :key="item.id" @click="Todetail(item)">
 				  <view class="header">
 				  	<view class="header-left" >
 						<view class="avator" >	
 							<u-avatar :text="item.username.substr(0,1)" size="50"></u-avatar>
 						</view>
-				  			<view class="username">{{item.username}}</view>						
-				  	</view>
-				<!--  	<view class="header-right" @click="attention(item)">
-				  		<view>关注</view>
-				  		<image class="iconimg" :src="item.hasFocus?checked:Unchecked" alt="" style="width: 40px;" mode="scaleToFill"></image>
-				  	</view>	 -->		  	
+				  			<view class="username">{{item.username}}</view>	
+							<view class="createtime">
+								{{formatDateTime(item.createTime)}}发布
+							</view>					
+				  	</view>		  	
 				  </view>
 				 
 				  <view class="picture" >
@@ -43,7 +42,7 @@
 								<view class="collectnums">
 									{{item.collectNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect" @click="ClickCollect(item,id)" alt="">
+								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect"  @click="ClickCollect(item,id)" alt="">
 							</view>
 						</view>
 						
@@ -89,7 +88,19 @@ export default {
 			onReachBottom(){
 				this.getData();
 			},
-			methods: {		
+			methods: {	
+				Todetail(item){
+					uni.navigateTo({
+						url:'/pages/detail/detail?item='+JSON.stringify(item),
+						success: res=>{
+							console.log(res)
+						},
+						fail: res=>{
+							console.log(res)
+						}
+						// url:''
+					});
+				},
 				init(){
 					uni.request({
 						url:'http://47.107.52.7:88/member/photo/focus',
@@ -221,23 +232,23 @@ export default {
 					font-size: 20px;
 					font-weight: 700;
 					position: relative;
-					top:-85rpx;
-					left:140rpx;
+					top:-100rpx;
+					left:130rpx;
 					display: inline-block;
-	
+				}
+				.createtime{
+					font-size: 14px;
+					color: #ccc;
+					position: relative;
+					top:-50rpx;
+					left:80rpx;
+					display: inline-block;
 				}
 			}
 			.header-right{
 				margin-right: 50rpx;
-				view{
-					margin-top: 60rpx;
-					margin-right: 10rpx;
-					float: left
-				}
-				img{
-					margin-top: 40rpx;
-					float: right;
-				}
+				margin-top: 55rpx;
+				
 				float: right;
 				
 			}

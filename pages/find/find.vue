@@ -8,17 +8,16 @@
 						<view class="avator" >	
 							<u-avatar :text="item.username.substr(0,1)" size="50"></u-avatar>
 						</view>
-				  			<view class="username">{{item.username}}</view>						
-				  	</view>
-				<!--  	<view class="header-right" @click="attention(item)">
-				  		<view>关注</view>
-				  		<image class="iconimg" :src="item.hasFocus?checked:Unchecked" alt="" style="width: 40px;" mode="scaleToFill"></image>
-				  	</view>	 -->		  	
+				  			<view class="username">{{item.username}}</view>	
+							<view class="createtime">
+								{{formatDateTime(item.createTime)}}发布
+							</view>					
+				  	</view>		  	
 				  </view>
 				 
 				  <view class="picture" >
-					<template v-for="imgs in item.imageUrlList">
-						<image :src="imgs" alt=""  mode="aspectFill"></image>
+					<template v-for="(imgs,index) in item.imageUrlList">
+						<image :src="imgs" alt=""  mode="aspectFill" @click="previewImage(item.imageUrlList)"></image>
 					</template> 
 				  </view>
 				  <view class="footer">
@@ -43,15 +42,14 @@
 								<view class="collectnums">
 									{{item.collectNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect" @click="ClickCollect(item,id)" alt="">
+								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect"  @click="ClickCollect(item,id)" alt="">
 							</view>
 						</view>
 						
 				  </view>
 				  </view>
 		</view>
-	
-	
+
 </template>
 
 <script>
@@ -90,7 +88,12 @@ export default {
 			onReachBottom(){
 				this.getData();
 			},
-			methods: {	
+			methods: {
+				previewImage(imgs) {
+				  uni.previewImage({ 
+				    urls:imgs,
+				  });
+				},
 				init(){
 					uni.request({
 						url:'http://47.107.52.7:88/member/photo/share',
@@ -219,26 +222,27 @@ export default {
 				
 				}
 				.username{
+					width: 100rpx;
 					font-size: 20px;
 					font-weight: 700;
 					position: relative;
-					top:-85rpx;
-					left:140rpx;
+					top:-100rpx;
+					left:130rpx;
 					display: inline-block;
-	
+				}
+				.createtime{
+					font-size: 14px;
+					color: #ccc;
+					position: relative;
+					top:-100rpx;
+					left:120rpx;
+					display: inline-block;
 				}
 			}
 			.header-right{
 				margin-right: 50rpx;
-				view{
-					margin-top: 60rpx;
-					margin-right: 10rpx;
-					float: left
-				}
-				img{
-					margin-top: 40rpx;
-					float: right;
-				}
+				margin-top: 55rpx;
+				
 				float: right;
 				
 			}

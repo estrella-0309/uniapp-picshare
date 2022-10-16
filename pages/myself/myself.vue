@@ -157,7 +157,7 @@
 						}
 						.create{
 							position: relative;
-							top: -70px;
+							top: -68px;
 							left: 280rpx;
 							width: 150px;
 							color: #fff;

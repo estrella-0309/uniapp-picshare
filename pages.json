@@ -74,6 +74,26 @@
 		        "enablePullDownRefresh": false
 		    }
 		    
+		},
+		
+		{
+		    "path" : "pages/detail/detail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText":"详情",
+		        "enablePullDownRefresh": false,
+		        "onReachBottomDistance": 100
+		    }
+		    
+		},
+		{
+		    "path" : "pages/reply/reply",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "评论",
+		        "enablePullDownRefresh": false
+		    }
+		    
 		}
         
     ],
@@ -114,6 +134,7 @@
 			}
 		]
 	},
+	
 	"easycom": {
 		"^u-(.*)":"uview-ui/components/u-$1/u-$1.vue"
 	},

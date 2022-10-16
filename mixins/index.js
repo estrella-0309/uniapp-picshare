@@ -1,4 +1,5 @@
 import{Focus,UnFocus,Like,UnLike,Collect,UnCollect} from "@/api/index/index.js"
+import timeFrom from'@/time/timeFrom.js'
 let Checked = {
 	methods: {
 		// 关注
@@ -54,6 +55,7 @@ let Checked = {
 		},
 		
 		async ClickCollect(item,userId) {
+			console.log(item,"item")
 			if (item.hasCollect) {
 				item.hasCollect = false;
 				item.collectNum--;
@@ -78,7 +80,15 @@ let Checked = {
 			// uni.$emit('indexFeedLoveChange',item)
 			// uni.$emit('myFeedLoveChange',item)
 		},
-		
+		formatDateTime(timeDate){
+			console.log(timeDate,"timeDate")
+		  // let Time = new Date(timeDate);
+		  // console.log(Time,"Time");
+		  // let timestemp = Time.getTime();
+		  // console.log(timestemp,"timestemp");
+		  let t = timeFrom(timeDate, "yyyy年mm月dd日");
+		  return t;
+		}
 		
 	}
 }

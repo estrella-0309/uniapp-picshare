@@ -37,13 +37,13 @@ export const GetCollect=async(current,useId)=>{
 	return result
 }
 //收藏
-export const Collect=async(shareId,useId)=>{
+export const Collect=async(shareId,userId)=>{
 	let result =await api({
 		url:'/photo/collect',
 		method:'POST',
-	"Content-Type": "application/x-www-form-urlencoded",
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
-			shareId:shareId,useId:useId
+			shareId:shareId,userId:userId
 		},
 	})
 	return result
@@ -53,7 +53,7 @@ export const UnCollect=async(collectId)=>{
 	let result =await api({
 		url:'/photo/collect/cancel',
 		method:'POST',
-		
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			collectId:collectId,
 		},

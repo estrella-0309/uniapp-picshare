@@ -138,11 +138,11 @@
 			    return
 			  }
 			  
-			  // uni.showToast({
-			  //   title: "动态发布中...",
-			  //   icon: "loading",
-			  //   duration: 60000,
-			  // });
+			  uni.showToast({
+			    title: "动态发布中...",
+			    icon: "loading",
+			    duration: 60000,
+			  });
 			  console.log(this.uploadPicsList)
 			  const upimgslist=this.uploadPicsList.map(item=>{
 				  return {
