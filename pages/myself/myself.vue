@@ -53,7 +53,7 @@
 							收藏
 							</view>
 						</view>
-						<view class="setting">
+						<view class="setting"> 	
 							<view class="text">
 								编辑资料
 							</view>
@@ -63,6 +63,44 @@
 			</view>
 		</view>
 		 <div class="footer">
+			 <scroll-view class="scroll1" scroll-x="true">
+			 			<view :class="currentTab==index ? 'select' : 'select1'" :data-current="index" @click="swichNav"
+			 				v-for="(item,index) in scoll" :key='index'>{{item.txt}}
+			 			</view>
+			 		</scroll-view>
+			 		<swiper :current="currentTab" @change="bindChange" class='swp' :style="{height:aheight?aheight+'px':'auto'}">
+			 			<swiper-item>
+			 				<view class="list-item">
+			 					<view class="list" v-for="(item,index) in list" :key='index'>
+			 						<view class="list-img">
+			 							<image src="/static/zatu/1.jpg" mode=""></image>
+			 						</view>
+			 						<view class="list-con">
+			 							<view>{{item.title}}</view>
+			 							<view class="list-foot">
+			 								<view>
+			 									<image src="/static/logo.png" mode="" class="user"></image>
+			 									<view class="username">{{item.user}}</view>
+			 								</view>
+			 								<view>
+			 									<image src="/static/logo.png" mode="" class="like"></image>
+			 									<view class="likenum">{{item.like}}</view>
+			 								</view>
+			 							</view>
+			 						</view>
+			 					</view>
+			 				</view>
+			 			</swiper-item>
+			 			<swiper-item>直播间</swiper-item>
+			 			<swiper-item>代言福利
+			 				<view>
+			 					
+			 				</view>
+			 			</swiper-item>
+			 			<swiper-item>KPI</swiper-item>
+			 			<!-- <swiper-item>鼻部</swiper-item>
+			 			<swiper-item>瘦身塑型</swiper-item> -->
+			 		</swiper>
 		 </div>
 	</view>
 	
@@ -72,17 +110,175 @@
 	export default {
 		data() {
 			return {
-				
+				currentTab: 0,
+								aheight: '',
+								scoll: [{
+									txt: '精选'
+								}, {
+									txt: '直播间'
+								}, {
+									txt: '代言福利'
+								}, {
+									txt: 'KPI'
+								}],
+								list: [{
+										user: '1',
+										title: 'ssssssssss',
+										like: '33'
+									}, {
+										user: '2',
+										title: 'ssaassssssss',
+										like: '33'
+									},
+									{
+										user: '3',
+										title: 'ss2ssssssss',
+										like: '33'
+									},
+									{
+										user: '4',
+										title: 'ss2ssssssss',
+										like: '33'
+									},
+									{
+										user: '5',
+										title: 'ss2ssssssss',
+										like: '33'
+									},
+									{
+										user: '6',
+										title: 'ss2ssssssss',
+										like: '33'
+									}
+								]
 			}
 		},
+		onShow() {
+					// 动态获取滑动页面高度
+					const query = uni.createSelectorQuery().in(this);
+					query.select('.list-item').boundingClientRect(data => {
+						this.aheight = data.height
+					}).exec();
+				},
 		methods: {
-			
+			bindChange: function(e) {
+							this.currentTab = e.detail.current
+						},
+						//点击tab切换
+						swichNav: function(e) {
+							var that = this;
+							if (this.currentTab === e.target.dataset.current) {
+								return false;
+							} else {
+								this.currentTab = e.target.dataset.current
+							}
+						}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	
+	.scroll1 {
+			position: fixed;
+			top: 0rpx;
+			z-index:99;
+			width: 100%;
+			white-space: nowrap;
+			padding: 20rpx 20rpx;
+			background-color: #ffffff;
+	 
+			& view {
+				white-space: normal;
+				display: inline-block;
+			}
+	 
+			& view:before {
+				content: '|';
+				color: #f4f4f4;
+				margin: 0 20rpx;
+			}
+	 
+			& view:first-child:before {
+				display: none;
+			}
+	 
+			.select {
+				color: #fb6583;
+				font-size: 40rpx;
+			}
+	 
+			.select1 {
+				color: #808080;
+			}
+		}
+	 
+		.swp {
+			margin-top: 90rpx;
+			.list-item {
+				overflow: hidden;
+				// margin-left: -1%;
+	 
+				.list {
+					float: left;
+					width: 48%;
+					margin: 20rpx 0 0 1%;
+					border: solid 1px #eaeaea;
+					background-color: #ffffff;
+					border-radius: 12rpx;
+	 
+					.list-img {
+						image {
+							object-fit: fill;
+							width: 100%;
+							border-top-left-radius: 12rpx;
+							border-top-right-radius: 12rpx;
+							height: 364rpx;
+						}
+					}
+	 
+					.list-con {
+						padding: 15rpx;
+	 
+						.list-foot {
+							margin-top: 20rpx;
+							display: flex;
+							justify-content: space-between;
+							align-items: center;
+	 
+							&>view {
+								font-size: 26rpx;
+								display: flex;
+								align-items: center;
+							}
+	 
+							.username {
+								color: #999999;
+								margin-left: 10rpx;
+								width: 150rpx;
+								overflow: hidden;
+								text-overflow: ellipsis;
+								white-space: nowrap;
+							}
+	 
+							.user {
+								width: 50rpx;
+								height: 50rpx;
+							}
+	 
+							.likenum {
+								color: #333333;
+								margin-left: 10rpx;
+							}
+	 
+							.like {
+								width: 28rpx;
+								height: 28rpx;
+							}
+						}
+					}
+				}
+			}
+		}
 	.text{
 		width: 80%;
 		height: 40%;

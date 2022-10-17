@@ -37,6 +37,7 @@
 			},
 			async login(){
 				let result=await Login(this.username,this.password)
+				console.log(result)
 				if(result.code==200){
 					this.$store.dispatch("getUserList",result.data);
 					

@@ -9,7 +9,7 @@ let Checked = {
 				let result=await UnFocus(item.pUserId,userId);
 				console.log(result)
 				uni.showToast({
-					title: "取消点赞",
+					title: "取消关注",
 					icon: "success",
 					duration: 1000,
 				});
@@ -18,7 +18,7 @@ let Checked = {
 				let result=await Focus(item.pUserId,userId)
 				console.log(result)
 				uni.showToast({
-					title: "点赞成功",
+					title: "关注成功",
 					icon: "success",
 					duration: 1000,
 				});
@@ -81,7 +81,6 @@ let Checked = {
 			// uni.$emit('myFeedLoveChange',item)
 		},
 		formatDateTime(timeDate){
-			console.log(timeDate,"timeDate")
 		  // let Time = new Date(timeDate);
 		  // console.log(Time,"Time");
 		  // let timestemp = Time.getTime();

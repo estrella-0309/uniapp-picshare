@@ -102,7 +102,8 @@ export const GetSecondComment=async(current,shareId,commentId)=>{
 	return result
 }
 //二级评论
-export const SecondComment=async(content,parentCommentId,parentCommentUserId,replyCommentId,userId,shareId,userName)=>{
+export const SecondComment=async(content,parentCommentId,parentCommentUserId,replyCommentId,replyCommentUserId,userId,shareId,userName)=>{
+
 	let result =await api({
 		url:'/photo/comment/second',
 		method:'POST',
