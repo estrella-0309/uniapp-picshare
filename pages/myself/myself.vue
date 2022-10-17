@@ -54,7 +54,7 @@
 							</view>
 						</view>
 						<view class="setting"> 	
-							<view class="text">
+							<view class="text" @click="Toalter">
 								编辑资料
 							</view>
 						</view>
@@ -113,13 +113,9 @@
 				currentTab: 0,
 								aheight: '',
 								scoll: [{
-									txt: '精选'
-								}, {
-									txt: '直播间'
-								}, {
-									txt: '代言福利'
-								}, {
-									txt: 'KPI'
+									txt: '我的'
+								},  {
+									txt: '保存'
 								}],
 								list: [{
 										user: '1',
@@ -161,6 +157,11 @@
 					}).exec();
 				},
 		methods: {
+			Toalter(){
+				uni.navigateTo({
+					url:'/pages/alter/alter'
+				})
+			},
 			bindChange: function(e) {
 							this.currentTab = e.detail.current
 						},
@@ -178,25 +179,25 @@
 </script>
 
 <style lang="scss" scoped>
+	/deep/ .uni-scroll-view-content {
+		display: flex;
+		view{
+			flex:1;
+			text-align: center;
+			font-size: 20rpx;
+		}
+	}
 	.scroll1 {
-			position: fixed;
-			top: 0rpx;
-			z-index:99;
+
 			width: 100%;
-			white-space: nowrap;
-			padding: 20rpx 20rpx;
+			display:flex;
+			// padding: 20rpx 20rpx;
 			background-color: #ffffff;
 	 
 			& view {
-				white-space: normal;
-				display: inline-block;
+				flex:1;
 			}
 	 
-			& view:before {
-				content: '|';
-				color: #f4f4f4;
-				margin: 0 20rpx;
-			}
 	 
 			& view:first-child:before {
 				display: none;
@@ -204,7 +205,8 @@
 	 
 			.select {
 				color: #fb6583;
-				font-size: 40rpx;
+				border-bottom: 1px solid red;
+				// font-size: 40rpx;
 			}
 	 
 			.select1 {

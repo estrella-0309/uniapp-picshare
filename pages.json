@@ -30,15 +30,6 @@
             
         }
         ,{
-            "path" : "pages/subscription/subscription",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "订阅",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-        ,{
             "path" : "pages/find/find",
             "style" :                                                                                    
             {
@@ -49,10 +40,10 @@
             
         }
         ,{
-            "path" : "pages/message/message",
+            "path" : "pages/alter/alter",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "消息",
+                "navigationBarTitleText": "修改",
                 "enablePullDownRefresh": false
             }
             
@@ -74,8 +65,7 @@
 		        "enablePullDownRefresh": false
 		    }
 		    
-		},
-		
+		},	
 		{
 		    "path" : "pages/detail/detail",
 		    "style" :                                                                                    
@@ -83,15 +73,6 @@
 		        "navigationBarTitleText":"详情",
 		        "enablePullDownRefresh": false,
 		        "onReachBottomDistance": 100
-		    }
-		    
-		},
-		{
-		    "path" : "pages/reply/reply",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "评论",
-		        "enablePullDownRefresh": false
 		    }
 		    
 		}
