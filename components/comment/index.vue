@@ -44,8 +44,7 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(JSON.parse(JSON.stringify(this.commentList)),"comment")
-		console.log(this.List)
+		console.log(this.commentList);
 	},
 	watch:{
 		commentList:{
@@ -72,6 +71,10 @@ export default {
 				data:data,
 			})
 		},
+		async getSecond(id){
+			let result=await GetSecondComment(1,this.id,id);
+			console.log(result,"second")
+		}
 	}
 };
 </script>

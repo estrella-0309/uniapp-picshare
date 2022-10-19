@@ -267,8 +267,10 @@ export const Change=async(content,id,imageCode,pUserId,title)=>{
 }
 //删除图文分享
 export const DeleteShare=async(shareId,userId)=>{
+	console.log(shareId,userId)
 	let result =await api({
 		url:'/photo/share/delete',
+		"Content-Type": "application/x-www-form-urlencoded",
 		method:'POST',
 		data:{
 			shareId,shareId,
@@ -281,6 +283,7 @@ export const DeleteShare=async(shareId,userId)=>{
 export const Detail=async(shareId,userId)=>{
 	let result =await api({
 		url:'/photo/share/detail',
+		
 		method:'GET',
 		data:{
 			shareId,shareId,

@@ -12,11 +12,14 @@
 						<view class="avator" >	
 							<u-avatar :text="item.username.substr(0,1)" size="50"></u-avatar>
 						</view>
-				  			<view class="username">{{item.username}}</view>	
-							<view class="createtime">
-								{{formatDateTime(item.createTime)}}发布
-							</view>					
+				  						
 				  	</view>		  	
+					<view class="header-right">
+						<view class="username">{{item.username}}</view>
+						<view class="createtime">
+							{{formatDateTime(item.createTime)}}发布
+						</view>	
+					</view>	
 				  </view>
 				 
 				  <view class="picture" >
@@ -164,45 +167,26 @@ export default {
 		width: 750rpx;
 		.header{
 			box-sizing: border-box;
-			width: 750rpx;
+			width: 400rpx;
 			height: 150rpx;
+			display: flex;
 			.header-left{
-				float: left;
 				width: 300rpx;
 				padding: 30rpx 30rpx;
-				position: absolute;
-				.avator{
-					// position: relative;
-					// width: 100rpx;
-					color: red;
-					span {
-						
-					}
-				
-				}
-				.username{
-					font-size: 20px;
-					font-weight: 700;
-					position: relative;
-					top:-100rpx;
-					left:130rpx;
-					display: inline-block;
-				}
-				.createtime{
-					font-size: 14px;
-					color: #ccc;
-					position: relative;
-					top:-50rpx;
-					left:80rpx;
-					display: inline-block;
-				}
+				flex:1;		
 			}
 			.header-right{
-				margin-right: 50rpx;
-				margin-top: 55rpx;
+				flex:3;
+				margin-top: 30rpx;
+				.username{
+									font-size: 20px;
+									font-weight: 700;
+								}
+								.createtime{
+									font-size: 14px;
+									color: #ccc;
 				
-				float: right;
-				
+								}
 			}
 		}
 		.picture{
