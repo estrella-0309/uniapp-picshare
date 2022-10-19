@@ -74,6 +74,7 @@ export const FirstComment=async(current,shareId)=>{
 }
 //发表一级评论
 export const AddFirstComment=async(content,shareId,userId,userName)=>{
+	console.log(content,shareId,userId,userName)
 	let result =await api({
 		url:'/photo/comment/first',
 		method:'POST',
@@ -138,6 +139,7 @@ export const Focus=async(focusUserId,userId)=>{
 	let result =await api({
 		url:'/photo/focus',
 		method:'POST',
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			focusUserId:focusUserId,
 			userId:userId,
@@ -150,6 +152,7 @@ export const UnFocus=async(focusUserId,userId)=>{
 	let result =await api({
 		url:'/photo/focus/cancel',
 		method:'POST',
+		"Content-Type": "application/x-www-form-urlencoded",
 		data:{
 			focusUserId:focusUserId,
 			userId:userId,

@@ -1,8 +1,12 @@
 <template>
 	<view class="app">
+		<view v-if="!list.length>0">
+			
+			<u-empty text="还没有关注捏" mode="list" style="width:750rpx;height: 100vh;"></u-empty>
+		</view>
 				<view class="index-list" 
 					v-for="item in list"
-				  :key="item.id" @click="Todetail(item)">
+				  :key="item.id" @click="Todetail(item)" v-else>
 				  <view class="header">
 				  	<view class="header-left" >
 						<view class="avator" >	
@@ -32,17 +36,11 @@
 					 
 					  	
 						<view class="goodandcollect">
-							<view class="good">
-								<view class="goodnums">
-									{{item.likeNum}}
-								</view>
-								<image class="iconimg-2" :src="item.hasLike?good:Ungood" @click.stop="ClickLike(item,id)" alt=""></image>
+							<view class="good" @click.stop="ClickLike(item,id)">
+								<u-icon  :label="item.likeNum" :name="item.hasLike?'thumb-up-fill':'thumb-up'"  size="25" class="iconimg-2" ></u-icon>	
 							</view>
-							<view class="good">
-								<view class="collectnums">
-									{{item.collectNum}}
-								</view>
-								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect"  @click.stop="ClickCollect(item,id)" alt="">
+							<view class="good" @click.stop="ClickCollect(item,id)">
+								<u-icon  :label="item.collectNum" :name="item.hasCollect?'star-fill':'star'"  size="25" class="iconimg-2" ></u-icon>	
 							</view>
 						</view>
 						
@@ -53,31 +51,20 @@
 </template>
 
 <script>
+import {GetFocus} from "@/api/index/index.js"
 import {mapState} from "vuex"
-import Unchecked from '@/static/checked.png'
-import Ungood from '@/static/good.png'
-import good from '@/static/good-h.png'
-import checked from '@/static/checked-h.png'
-import Uncollect from '@/static/collect.png'
-import collect from '@/static/collect-h.png'
 import Checked from '@/mixins/index.js'
 export default {
 			mixins: [Checked],
 			data() {
-				return {
-					text:"无",
-					Unchecked:Unchecked,
-					checked:checked,
-					Uncollect:Uncollect,
-					collect:collect,
-					Ungood:Ungood,
-					good:good,
+				return {				
 					page:1,					
 					list:[],
 				}
 			},
 			onLoad(option) {					
 				uni.startPullDownRefresh();
+				console.log(this.list)
 			},
 			onPullDownRefresh() {
 				this.init();
@@ -97,93 +84,53 @@ export default {
 				Todetail(item){
 					uni.navigateTo({
 						url:'/pages/detail/detail?item='+JSON.stringify(item),
-						success: res=>{
-							console.log(res)
-						},
-						fail: res=>{
-							console.log(res)
-						}
-						// url:''
 					});
 				},
-				init(){
-					uni.request({
-						url:'http://47.107.52.7:88/member/photo/focus',
-						method:'GET',
-						header:{
-							  // "Accept": "application/json, text/plain, */*",
-							  // "Content-Type": "application/x-www-form-urlencoded",
-							  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-							  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-							  // "appId": "d39fc189485c43d9a4b37463b238ac84",
-							  // "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-						},
-						data:{
-							current:this.page,
-							size:10,
-							userId:this.id
-						},
-						success:res=>{
-							 if(res.data.code==200){
-									console.log(res.data.data.records,"focus")				
-									this.list=res.data.data.records;
-									this.page++;
-								
-							} 
-							else{
-								uni.showToast({
-												title:res.data.msg,
-												icon:'error',
-												duration:1000,
-								})
+				async init(){
+					let res=await GetFocus(1,this.id);
+					if(res.code==200){
+							console.log(res.data.records,"focus")	
+							for(let i=0;i<res.data.records.length;i++){
+								res.data.records[i].hasFocus=true;
 							}
-						}
-					})
+							this.list=res.data.records;
+							this.page++;
+						
+					} 
+					else{
+						uni.showToast({
+										title:res.msg,
+										icon:'error',
+										duration:1000,
+						})
+					}
 				},
-				getData(){
-					uni.request({
-						url:'http://47.107.52.7:88/member/photo/focus',
-						method:'GET',
-						header:{
-							  "Accept": "application/json, text/plain, */*",
-							  "Content-Type": "application/x-www-form-urlencoded",
-							  // "appId": "24d8ed2ab0444b048cbd5fcdde289109",
-							    // "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
-							  "appId": "d39fc189485c43d9a4b37463b238ac84",
-							  "appSecret": "06219a004b5ecf6c84f89ba5f9d5c81a037f6"
-						},
-						data:{
-							current:1,
-							size:10,
-							userId:this.id
-						},
-						success:res=>{
-							if(res.data.code==200){
-								this.list.push.apply(this.list,res.data.data.records);
-								this.page=0;
+				async getData(){
+					let res=await GetFocus(this.page,this.id);
+					console.log(res)
+					if(res.code==200){
+							console.log(res.data.recoSrds,"focus")
+							for(let i=0;i<res.data.records.length;i++){
+								res.data.records[i].hasFocus=true;
 							}
-							else{
-								uni.showToast({
-											title:res.data.msg,
-											icon:'error',
-											duration:1000,
-								})
-							}
-						}
-					})
+							this.list=[...this.list,...res.data.records];
+							
+							this.page++;
+						
+					} 
+					else{
+						uni.showToast({
+										title:res.msg,
+										icon:'error',
+										duration:1000,
+						})
 				}
+				}
+					
 			},
 			computed:{
 				...mapState({
 					id:state=>state.user.id,
-					username:state=>state.user.username,
-					appKey:state=>state.user.appKey,
-					password:state=>state.user.password,
-					sex:state=>state.user.sex,
-					introduce:state=>state.user.introduce,
-					avatar:state=>state.user.avatar,
-					createTime:state=>state.user.createTime,
-					lastUpdateTime:state=>state.user.lastUpdateTime
 				}),
 			}
 		}
@@ -211,7 +158,7 @@ export default {
 	float: left;
 	background-color: #f0f0f0;
 	.index-list{
-		margin-bottom: 100rpx;
+		margin-bottom: 50rpx;
 		background-color: #fff;
 		float: left;
 		width: 750rpx;

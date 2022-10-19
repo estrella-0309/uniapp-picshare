@@ -84,7 +84,7 @@ export default {
 				return {
 					data:{},
 					tempimg:[],
-					commentmsg:'123',
+					commentmsg:'',
 					commentList:{},
 					istrue:true,
 					page:1,

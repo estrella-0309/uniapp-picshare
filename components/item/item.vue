@@ -11,7 +11,7 @@
 						<view class="title">{{item.title}}</view>
 						<view class="content">{{item.content}}</view>
 						<div class="icon">
-								<u-icon   name="trash"  size="25" class="collect"></u-icon>		
+								<u-icon   name="trash"  size="25" class="collect" @click.stop="Delete(item)"></u-icon>		
 						</div>
 						</view>
 					</view>
@@ -39,6 +39,9 @@
 			this.getData()
 		},
 		methods:{
+			Delete(){
+				
+			},
 			async getData(){
 				console.log(this.page,"page")
 				let result;

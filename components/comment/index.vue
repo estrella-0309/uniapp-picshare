@@ -4,7 +4,7 @@
 			<u-empty text="还没有评论捏" mode="list"></u-empty>
 		</view>
 		<view class="comment" v-for="res in List.records" :key="res.id" v-else>
-			<view class="left"><u-avatar :text="res.userName.substr(0,1)" size="50"></u-avatar></view>
+			<view class="left"><u-avatar :text="res.userName.substr(0,1)" size="30"></u-avatar></view>
 			<view class="right">
 				<view class="top">
 					<view class="name">{{ res.userName }}</view>
@@ -18,10 +18,7 @@
 						<view class="username">{{ item.userName }}</view>
 						<view class="text">{{ item.content }}</view>
 					</view>
-					<!-- <view class="all-reply" @tap="toAllReply" v-if="res.secondcommentrecords.length>3">
-						共{{ res.secondcommentrecords.length }}条回复
-						<u-icon class="more" name="arrow-right" :size="26"></u-icon>
-					</view> -->
+
 				</view> 
 				<view class="bottom">
 					{{ res.createTime.split(' ')[0] }}
@@ -65,7 +62,7 @@ export default {
 				console.log(this.List)
 			},
 			deep:true,
-			immediate: true
+			// immediate: true
 		}
 	},
 	methods: {
@@ -88,7 +85,7 @@ export default {
 .comment {
 	display: flex;
 	padding: 30rpx;
-	font-size: 20px;
+	font-size: 15px;
 	border-bottom: 1px solid #5677fc;
 	.left {
 		image {
@@ -108,14 +105,14 @@ export default {
 			align-items: center;
 			margin-bottom: 10rpx;
 			.name {
-				font-size: 25px;
+				font-size: 20px;
 				color: #5677fc;
 			}
 			.like {
 				display: flex;
 				align-items: center;
 				color: #9a9a9a;
-				font-size: 26px;
+				font-size: 20px;
 				.num {
 					margin-right: 4rpx;
 					color: #9a9a9a;
@@ -138,12 +135,12 @@ export default {
 				padding: 20rpx;
 				border-bottom: solid 2rpx $u-border-color;
 				.username {
-					font-size: 24px;
+					font-size: 18px;
 					color: #999999;
 				}
 			}
 			.all-reply {
-				padding: 20rpx;
+				padding: 12rpx;
 				display: flex;
 				color: #5677fc;
 				align-items: center;
@@ -155,7 +152,7 @@ export default {
 		.bottom {
 			margin-top: 20rpx;
 			display: flex;
-			font-size: 24px;
+			font-size: 14px;
 			color: #9a9a9a;
 			.reply {
 				color: #5677fc;

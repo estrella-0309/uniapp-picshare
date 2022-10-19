@@ -1,4 +1,4 @@
-import{Focus,UnFocus,Like,UnLike,Collect,UnCollect} from "@/api/index/index.js"
+import{Focus,UnFocus,Like,UnLike,Collect,UnCollect,Detail} from "@/api/index/index.js"
 import timeFrom from'@/time/timeFrom.js'
 let Checked = {
 	methods: {
@@ -23,8 +23,6 @@ let Checked = {
 					duration: 1000,
 				});
 			}
-			// uni.$emit('indexFeedCheckChange',item)
-			// uni.$emit('myFeedLoveChange',item)
 		},
 		//点赞
 		async ClickLike(item,userId) {
@@ -43,15 +41,17 @@ let Checked = {
 				item.hasLike = true;
 				item.likeNum++;
 				let result=await Like(item.id,userId)
-				console.log(result)
+				if(result.code==200){
+					let temp=await Detail(item.id,userId);
+					item.likeId=temp.data.likeId;
+				}
 				uni.showToast({
 					title: "点赞成功",
 					icon: "success",
 					duration: 1000,
 				});
+				
 			}
-			// uni.$emit('indexFeedLoveChange',item)
-			// uni.$emit('myFeedLoveChange',item)
 		},
 		
 		async ClickCollect(item,userId) {
@@ -71,20 +71,18 @@ let Checked = {
 				item.collectNum++;
 				let result=await Collect(item.id,userId)
 				console.log(result)
+				if(result.code==200){
+					let temp=await Detail(item.id,userId);
+					item.collectId=temp.data.collectId;
+				}
 				uni.showToast({
 					title: "收藏成功",
 					icon: "success",
 					duration: 1000,
 				});
 			}
-			// uni.$emit('indexFeedLoveChange',item)
-			// uni.$emit('myFeedLoveChange',item)
 		},
 		formatDateTime(timeDate){
-		  // let Time = new Date(timeDate);
-		  // console.log(Time,"Time");
-		  // let timestemp = Time.getTime();
-		  // console.log(timestemp,"timestemp");
 		  let t = timeFrom(timeDate, "yyyy年mm月dd日");
 		  return t;
 		},

@@ -145,7 +145,7 @@
 			}
 		}
 		.btn{
-			 margin-top:300rpx;
+			 margin-top:400rpx;
 			 button{
 				 width: 600rpx;
 				 border-radius: 25px;
