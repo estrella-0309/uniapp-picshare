@@ -1,0 +1,132 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	{
+	    "path" : "pages/login/login",
+	    "style" :                                                                                    
+	    {
+	        "navigationBarTitleText": "登录页面",
+			"navigationBarTextStyle":"white",
+	        "enablePullDownRefresh": false,
+			"navigationBarBackgroundColor":"#59af92"
+	    }
+	    
+	},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "首页",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+			}
+		}
+	    
+        ,{
+            "path" : "pages/resgister/resgister",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "注册",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/find/find",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "发现",
+                "enablePullDownRefresh": true,
+                "onReachBottomDistance": 100
+            }
+            
+        }
+        ,{
+            "path" : "pages/alter/alter",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/myself/myself",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的",
+                "enablePullDownRefresh": false
+            }
+            
+        },
+		{
+		    "path" : "pages/issue/issue",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "发布",
+		        "enablePullDownRefresh": false
+		    }
+		    
+		},	
+		{
+		    "path" : "pages/detail/detail",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText":"详情",
+		        "enablePullDownRefresh": false,
+		        "onReachBottomDistance": 100
+		    }
+		    
+		}
+        
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#ccc",
+		"selectedColor": "#333",
+		"list":[
+			{
+				"text": "首页",
+				"pagePath": "pages/index/index",
+				"iconPath": "static/home.png",
+				"selectedIconPath": "static/home-h.png"
+			},
+			{
+				"text": "发现",
+				"pagePath": "pages/find/find",
+				"iconPath": "static/find.png",
+				"selectedIconPath": "static/find-h.png"
+			},
+			{
+				"text": "发布",
+				"pagePath": "pages/issue/issue",
+				"iconPath": "static/summit.png",
+				"selectedIconPath": "static/summit-h.png"
+			},
+			{
+				"text": "我的",
+				"pagePath": "pages/myself/myself",
+				"iconPath": "static/myself.png",
+				"selectedIconPath": "static/myself-h.png"
+			}
+		]
+	},
+	
+	"easycom": {
+		"^u-(.*)":"uview-ui/components/u-$1/u-$1.vue"
+	},
+	"condition" : { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [
+			{
+				"name": "", //模式名称
+				"path": "", //启动页面，必选
+				"query": "" //启动参数，在页面的onLoad函数里面得到
+			}
+		]
+	}
+}
