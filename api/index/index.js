@@ -28,7 +28,6 @@ export const GetCollect=async(current,userId)=>{
 	let result =await api({
 		url:'/photo/collect',
 		method:'GET',
-	
 		data:{
 			current:current,size:10,userId:userId
 			

@@ -1,24 +1,21 @@
 <template>
 	
 	<view class="box">
-		<view class="list" v-for="item in list.records" :key='item.id'>
+		<view class="list" v-for="(item,index) in list" :key="index">
 		
 			<view class="list-img">
 				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>
-				<view class="list-con">
-					<view class="list-foot">
-						<view>					
-							<view class="username">{{item.username}}</view>
-						</view>
-							<view class="content">{{item.content}}</view>
-							<div class="icon">
-								<u-icon   :name="item.hasCollect?'star-fill':'star'"  label-size="10"class="collect"></u-icon>
-								
-								<u-icon   :name="item.hasLike?'thumb-up-fill':'thumb-up'"  size="20"  label-size="10" class="like"></u-icon>
-								</div>
+			</view>
+			<view class="list-con">
+					<view class="list-foot">			
+						<view class="title">{{item.title}}</view>
+						<view class="content">{{item.content}}</view>
+						<div class="icon">
+								<u-icon   name="trash"  size="25" class="collect"></u-icon>		
+						</div>
 						</view>
 					</view>
-				</view>
+				
 			</view>
 			
 		</view>
@@ -34,7 +31,7 @@
 		props:["type"],
 		data() {
 			 return{
-				 list:[1,2,34],
+				 list:[],
 				 page:1,
 			 }
 		},
@@ -43,36 +40,37 @@
 		},
 		methods:{
 			async getData(){
+				console.log(this.page,"page")
 				let result;
-				console.log(this.type)
 				switch(this.type.txt){
-					
+		
 					case 'My':
 					result=await GetMy(this.page,this.userid);
 					console.log(result)
 					if(result.code==200){
-						this.list=result.data;
+						
+						this.list=[...this.list,...result.data.records]
+						console.log(this.list)
 					}
 					break;
 					case 'Like':
 					result=await Getlike(this.page,this.userid);
-					console.log(result);
+					console.log(result)
 					if(result.code==200){
+						this.list=[...this.list,...result.data.records]
 						console.log(this.list)
-						this.list=result.data;
-						console.log(this.list,"code")
 					}
 					break;
 					case 'Collect':
 					result=await GetCollect(this.page,this.userid);
-					console.log(result,"co");
+					console.log(result)
 					if(result.code==200){
-						this.list=result.data;
-						console.log(this.list,"collect")
+						this.list=[...this.list,...result.data.records]
+						console.log(this.list)
 					}
 					break;
 				}
-				
+				this.page++;
 			}
 		},
 		computed: {
@@ -103,10 +101,11 @@
 		 .list:nth-child(even){
 			 margin-right:0;
 		 }
-		 .username{
-			 font-size:20px;
+		 .title{
+			 font-size:23px;
 		 }
 		 .content{
+				font-size:16px;
 				overflow: hidden;
 			    text-overflow: ellipsis;
 			    white-space: nowrap;
@@ -122,71 +121,5 @@
 			 }
 		 }
 	 }
-	 
-// .list-item {
-// 		display:flex;
-// 		flex-wrap: wrap;  flex-direction: row;
-// 		// overflow: hidden; 
-// 		&>
-// 		.list {
-// 				// float: left;
-// 				flex:1;
-// 				width: 48%;
-// 				margin: 20rpx 0 0 1%;
-// 				border: solid 1px #eaeaea;
-// 				background-color: #ffffff;
-// 				border-radius: 12rpx;
-		 
-// 				.list-img {
-// 					image {
-// 						object-fit: fill;
-// 						width: 100%;
-// 						border-top-left-radius: 12rpx;
-// 						border-top-right-radius: 12rpx;
-// 						height: 364rpx;
-// 					}
-// 				}
-		 
-// 				.list-con {
-// 					padding: 15rpx;
-		 
-// 					.list-foot {
-// 						margin-top: 20rpx;
-// 						display: flex;
-// 						justify-content: space-between;
-// 						align-items: center;
-		 
-// 						&>view {
-// 							font-size: 26rpx;
-// 							display: flex;
-// 							align-items: center;
-// 						}
-		 
-// 						.username {
-// 							color: #999999;
-// 							margin-left: 10rpx;
-// 							width: 150rpx;
-// 							overflow: hidden;
-// 							text-overflow: ellipsis;
-// 							white-space: nowrap;
-// 						}
-		 
-// 						.user {
-// 							width: 50rpx;
-// 							height: 50rpx;
-// 						}
-		 
-// 						.likenum {
-// 							color: #333333;
-// 							margin-left: 10rpx;
-// 						}
-		 
-// 						.like {
-// 							width: 28rpx;
-// 							height: 28rpx;
-// 						}
-// 					}
-// 				}
-// 			}
-// 		}
+
 </style>

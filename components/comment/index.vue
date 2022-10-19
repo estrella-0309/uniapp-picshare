@@ -1,6 +1,5 @@
 <template>
 	<view>
-		{{List}}
 		<view v-if="List.total==0">
 			<u-empty text="还没有评论捏" mode="list"></u-empty>
 		</view>
@@ -14,8 +13,8 @@
 				{{ res.content }}
 				</view>
 			
-				<view class="reply-box" v-if="res.secondcommentrecords!=[]">
-					<view class="item" v-for="item in res.secondcommentrecords" :key="item.id">
+				<view class="reply-box" v-if="res.secondcommentrecords">
+					<view class="item" v-for="item in res.secondcommentrecords.records" :key="item.id">
 						<view class="username">{{ item.userName }}</view>
 						<view class="text">{{ item.content }}</view>
 					</view>
@@ -38,8 +37,10 @@
 </template>
 
 <script>
+import {GetSecondComment} from "@/api/index/index.js"
 export default {
-	props:['commentList'],
+
+	props:['commentList','id'],
 	data() {
 		return {
 			List:[],
@@ -49,14 +50,19 @@ export default {
 		console.log(JSON.parse(JSON.stringify(this.commentList)),"comment")
 		console.log(this.List)
 	},
-	updated(){
-		console.log(this.List,"update")
-	},
 	watch:{
 		commentList:{
-			handler(newVal,oldVal){
+			async handler(newVal,oldVal){
 				console.log(newVal,"new",oldVal,"old");
+				for(let i=0;i<newVal.records.length;i++){
+					console.log(this.id,newVal.records[i].id);
+					let result=await GetSecondComment(1,this.id,newVal.records[i].id);
+					if(result.data!==null){
+						newVal.records[i].secondcommentrecords=result.data
+					}
+				}
 				this.List=newVal;
+				console.log(this.List)
 			},
 			deep:true,
 			immediate: true

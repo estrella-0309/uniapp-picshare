@@ -53,7 +53,9 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的",
-                "enablePullDownRefresh": false
+                "enablePullDownRefresh": true,
+				"onReachBottomDistance": 100
+				
             }
             
         },

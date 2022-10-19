@@ -40,7 +40,7 @@
 
 			</view>
 			<!-- <u-line color="blue"></u-line> -->
-				<comment :commentList="commentList"></comment>
+				<comment :commentList="commentList" :id="this.data.id"></comment>
 				<view class="fixedbar" v-if="istrue"> 
 					<view class="like" @click="ClickLike(data,userid)">
 						<u-icon  label="点赞" :name="data.hasLike?'thumb-up-fill':'thumb-up'"  size="35"  label-size="25"></u-icon>
@@ -95,7 +95,7 @@ export default {
 			async onLoad(option) {
 				this.data=option.item;
 				this.data=JSON.parse(this.data)
-				await this.initcomment(this.page);				
+				await this.initcomment();				
 				let _this=this
 				uni.$on("sendsecondmsg",function(data){
 					_this.istrue=false
@@ -104,38 +104,19 @@ export default {
 				})
 			},
 			onReachBottom(){
-				
-				// this.getData();
+
 			},
 			methods: {
-				async initcomment(page){
-					let result=await FirstComment(page,this.data.id)
+				async initcomment(){
+					let result=await FirstComment(this.page,this.data.id)
 					this.commentList=result.data;	
-					for(let i=0;i<this.commentList.records.length;i++){
-					
-						this.GetSecond(this.commentList.records[i].id,i);
-					
-					}
 				},
-				 async GetSecond(id,i){
-					let result= await GetSecondComment(1,this.data.id,id);
-						console.log(result,"result")
-					if(result.data==null){
-						this.commentList.records[i].secondcommentrecords=[]
-					}
-					else{
-						this.commentList.records[i].secondcommentrecords=result.data.records;
-					}
-					
-				},
+				
 				previewImage(index) {
 				  uni.previewImage({ 
 				    current:index,
 					urls:this.data.imageUrlList,
 				  });
-				},
-				getData(){
-					console.log("getData");
 				},
 				Onblur(){
 					let _this=this;

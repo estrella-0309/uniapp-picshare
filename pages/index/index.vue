@@ -17,7 +17,7 @@
 				 
 				  <view class="picture" >
 					<template v-for="imgs in item.imageUrlList">
-						<image :src="imgs" alt=""  mode="aspectFill"></image>
+						<image :src="imgs" alt=""  mode="aspectFill" @click.stop="previewImage(item.imageUrlList)"></image>
 					</template> 
 				  </view>
 				  <view class="footer">
@@ -36,13 +36,13 @@
 								<view class="goodnums">
 									{{item.likeNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasLike?good:Ungood" @click="ClickLike(item,id)" alt=""></image>
+								<image class="iconimg-2" :src="item.hasLike?good:Ungood" @click.stop="ClickLike(item,id)" alt=""></image>
 							</view>
 							<view class="good">
 								<view class="collectnums">
 									{{item.collectNum}}
 								</view>
-								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect"  @click="ClickCollect(item,id)" alt="">
+								<image class="iconimg-2" :src="item.hasCollect?collect:Uncollect"  @click.stop="ClickCollect(item,id)" alt="">
 							</view>
 						</view>
 						
@@ -89,6 +89,11 @@ export default {
 				this.getData();
 			},
 			methods: {	
+				previewImage(imgs) {
+				  uni.previewImage({ 
+				    urls:imgs,
+				  });
+				},
 				Todetail(item){
 					uni.navigateTo({
 						url:'/pages/detail/detail?item='+JSON.stringify(item),

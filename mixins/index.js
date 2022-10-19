@@ -88,14 +88,6 @@ let Checked = {
 		  let t = timeFrom(timeDate, "yyyy年mm月dd日");
 		  return t;
 		},
-		formatDateTime2(timeDate){
-		  // let Time = new Date(timeDate);
-		  // console.log(Time,"Time");
-		  // let timestemp = Time.getTime();
-		  // console.log(timestemp,"timestemp");
-		  let t = timeFrom(timeDate, "yyyy-mm-dd");
-		  return t;
-		}
 		
 	}
 }

@@ -21,18 +21,24 @@
 							  
 							<view class="create">
 								<view class="text">
-									{{formatDateTime2(lastUpdateTime)}}
+									{{getDate(lastUpdateTime)}}
 								</view>
 							</view>
 						</view>
 					</view>
 					<view class="introduce">
-						这个人很懒，什么都没有留下
+						<view class="" v-if="introduce!==null">
+							{{introduce}}
+						</view>
+						<view class="" v-else>
+							这个人很懒，什么都没有留下
+						</view>
+						
 					</view>
 					<view class="mylists">
 						<view class="focus">
 							<view class="num">
-								0
+								{{focusNum}}
 							</view>
 							<view >
 							关注
@@ -40,7 +46,7 @@
 						</view>
 						<view class="like">
 							<view class="num">
-								0
+								{{likeNum}}
 							</view>
 							<view >
 							喜欢
@@ -48,7 +54,7 @@
 						</view>
 						<view class="collections">
 							<view class="num">
-								0
+								{{collectNum}}
 							</view>
 							<view >
 							收藏
@@ -70,13 +76,13 @@
 			 			</view>
 			 		</scroll-view>
 			 		<swiper :autoplay="false"
-					duration="50"
+					duration="100"
       @change="changeSwiper"
       :current="currentIndex"
       :style="{ height: swiperHeight + 'px' }">
 			 			 <swiper-item v-for="(item, index) in dataList" :key="index">
 			 			        <view :id="'content-wrap' + index">
-			 			          <item :type="item"></item>
+			 			          <item :type="item" ref="Data"></item>
 			 			        </view>
 			 			      </swiper-item>
 			 		
@@ -88,7 +94,7 @@
 
 <script>
 	import {mapState} from "vuex"
-	import {GetMy} from "@/api/index/index.js"
+	import {GetCollect,Getlike,GetFocus} from "@/api/index/index.js"
 	import item from "@/components/item/item.vue"
 	import Checked from '@/mixins/index.js'
 	export default {
@@ -98,6 +104,9 @@
 		},
 		data() {
 			return {
+				focusNum:0,
+				likeNum:0,
+				collectNum:0,
 				sexx:'男',
 				swiperHeight: 0,
 				currentIndex: 0,
@@ -118,16 +127,24 @@
 				{
 					txt: 'Collect'
 				},],
-				list:[],	
 			}
 		}, 
-		onShow () {	
-			console.log(1)
+		 onReachBottom(){
+			this.$nextTick(async () =>{
+				await this.$refs.Data[this.currentIndex].getData()
+					this.setSwiperHeight()
+				}
+			)
+
 		},
 		async onLoad(){
-			
-			let result=await GetMy(1,this.userid);
-			this.list=result.data
+			let result;
+			result=await GetCollect(1,this.id);
+			this.collectNum=result.data.total
+			result=await Getlike(1,this.id);
+			this.likeNum=result.data.total
+			result=await GetFocus(1,this.id);
+			this.focusNum=result.data.total
 			this.$nextTick(() => {
 			      this.setSwiperHeight();
 			    });
@@ -137,7 +154,16 @@
 			
 		},
 		methods: {
-			
+			getDate(date){
+				//date是传过来的时间戳，注意需为13位，10位需*1000
+				//也可以不传,获取的就是当前时间
+			      var time = new Date(Number(date));
+			      var year= time.getFullYear()  //年
+			      var month = ("0" + (time.getMonth() + 1)).slice(-2); //月
+			      var day = ("0" + time.getDate()).slice(-2); //日
+			      var mydate = year + "-" + month + "-" + day;
+			      return mydate
+			    },
 			 changeSwiper(e) {
 			      this.currentIndex = e.detail.current;
 			      //动态设置swiper的高度，使用nextTick延时设置
@@ -152,6 +178,7 @@
 				      query.exec((res) => {
 				        if (res && res[0]) {
 				          this.swiperHeight = res[0].height;
+						  console.log(this.swiperHeight,"height")
 				        }
 				      });
 				    },
@@ -160,7 +187,6 @@
 					url:'/pages/alter/alter'
 				})
 			},
-			
 			bindChange: function(e) {
 							this.currentIndex = e.detail.current
 						},

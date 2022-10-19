@@ -7,12 +7,10 @@ import timeFormat from './timeFormat.js';
  * 如果为布尔值false，无论什么时间，都返回多久以前的格式
  */
 function timeFrom(timestamp = null, format = 'yyyy-mm-dd') {
-	console.log(format)
 	if (timestamp == null) timestamp = Number(new Date());
 	timestamp = parseInt(timestamp);
 	// 判断用户输入的时间戳是秒还是毫秒,一般前端js获取的时间戳是毫秒(13位),后端传过来的为秒(10位)
 	if (timestamp.toString().length == 10) timestamp *= 1000;
-	return
 	var timer = (new Date()).getTime() - timestamp;
 	timer = parseInt(timer / 1000);
 	// 如果小于5分钟,则返回"刚刚",其他以此类推
