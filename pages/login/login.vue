@@ -79,7 +79,9 @@
 		
 		width: 600rpx;
 		height: 100rpx;
-		background-color:#218c64;
+		// background-color:#218c64;
+		color: #000;
+		background-color:rgba(255, 255, 255, 0.5);
 		margin: 30rpx 80rpx;
 		border-radius: 20px;
 		padding-left: 60rpx;
@@ -94,6 +96,7 @@
 	}
 	.box{
 		background-color: #409971;
+		background: url('../../static/background.png') no-repeat fixed center;
 		position:absolute;
 		top:0;
 		left:0;
@@ -113,15 +116,17 @@
 				color: #fff;
 				width: 600rpx;
 				height: 100rpx;
-				background-color:#218c64;
+				// background-color:#218c64;
 				margin: 30rpx auto;
 				border-radius: 20px;
 				padding-left: 60rpx;
+				color: #000;
+				background-color:rgba(255, 255, 255, 0.5);
 			}
 			.user-forget{
 				float: right;
 				padding-right:65rpx;
-				color: #76c2a5;
+				// color: #76c2a5;
 			}
 		}
 		.btn{

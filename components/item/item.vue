@@ -6,29 +6,8 @@
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
 		</view>
 		<view class="list" v-for="(item,index) in list" :key="index">
-		
-			<view class="list-img">
-				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>
-			</view>
-			<view class="list-con">
-					<view class="list-foot">			
-						<view class="title">{{item.title}}</view>
-						<view class="content">{{item.content}}</view>
-						<div class="icon" v-if="type.txt=='My'">
-								<u-icon   name="trash"  size="25"  @click="Delete(item)"></u-icon>		
-						</div>
-						<div class="icon" v-else>
-							<view @tap.stop>
-									<u-icon   @tap="ClickLike(item,userid)"   :name="item.hasLike?'thumb-up-fill':'thumb-up'"  size="25" class="iconimg-2" ></u-icon>
-							</view>
-								<view  @tap.stop>
-									<u-icon   @tap="ClickCollect(item,userid)" :name="item.hasCollect?'star-fill':'star'"  size="25" class="iconimg-2" ></u-icon >	
-								</view>
-								
-						</div>
-						</view>
-					</view>
-				
+				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>		
+				<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon>		
 			</view>
 			
 		</view>
@@ -109,38 +88,19 @@
 		  flex-wrap: wrap;
 		 .list{
 			  background-color:#DFE0EF ;
-		 		 // background-color: blue;
 		 		 margin-right:13rpx;
-				 margin-bottom: 20rpx;
-				 // border:1px solid black;
-		 		 width:49%;
-				 // background-color: #fff;
-				 border-radius:10px ;
-				 // height: 600rpx;
+				 margin-bottom: 20rpx;		
+		 		 width:49%;			 
+				 border-radius:10px;
+				 position: absolute;
 		 }
 		 .list:nth-child(even){
 			 margin-right:0;
 		 }
-		 .title{
-			 font-size:23px;
-		 }
-		 .content{
-				font-size:16px;
-				overflow: hidden;
-			    text-overflow: ellipsis;
-			    white-space: nowrap;
-		 }
 		 .icon{
-			 display: flex;
-			 margin-top: 10rpx;
-			 width:100%;
-			 justify-content: flex-end;
-			 .like{		 
-				flex:1;
-			 }
-			 .collect{
-				flex:1;
-			 }
+			position: relative;
+			bottom: 0;
+			right: 0;
 		 }
 	 }
 

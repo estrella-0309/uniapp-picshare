@@ -6,8 +6,8 @@
 					<view class="basis">
 						<view class="basis-left">
 							<view class="avator">
-								<img src="static/default.jpg" alt="">
-								<!-- <img :src="avatar" alt="" v-else> -->
+								<img src="static/default.jpg" alt="" v-if="avatar==null">
+								<img :src="avatar" alt="" v-else>
 							</view>
 							<view class="username">
 								{{username}}
@@ -138,6 +138,10 @@
 
 		},
 		async onLoad(){
+			if(this.sex!==null){
+				console.log(this.sex,"sex")
+				this.sexx=this.sex==1?'男':'女';
+			}
 			let result;
 			result=await GetCollect(1,this.id);
 			this.collectNum=result.data.total
@@ -148,9 +152,7 @@
 			this.$nextTick(() => {
 			      this.setSwiperHeight();
 			    });
-			if(this.sex!==null){
-				this.sexx=this.sex==1?'男':'女';
-			}
+			
 			
 		},
 		methods: {
@@ -225,6 +227,7 @@
 			font-size: 20rpx;
 		}
 	}
+	
 	.scroll1 {
 
 			width: 100%;
@@ -243,8 +246,8 @@
 			}
 	 
 			.select {
-				color: #fb6583;
-				border-bottom: 1px solid red;
+				color: #f6a54d;
+				border-bottom: 1px solid #f6a54d;
 				// font-size: 40rpx;
 			}
 	 

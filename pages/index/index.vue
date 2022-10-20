@@ -40,10 +40,10 @@
 					  	
 						<view class="goodandcollect">
 							<view class="good" @click.stop="ClickLike(item,id)">
-								<u-icon  :label="item.likeNum" :name="item.hasLike?'thumb-up-fill':'thumb-up'"  size="25" class="iconimg-2" ></u-icon>	
+								<u-icon  :label="item.likeNum" :name="item.hasLike?'thumb-up-fill':'thumb-up'"   color="#f4ea2a" size="25" class="iconimg-2" ></u-icon>	
 							</view>
 							<view class="good" @click.stop="ClickCollect(item,id)">
-								<u-icon  :label="item.collectNum" :name="item.hasCollect?'star-fill':'star'"  size="25" class="iconimg-2" ></u-icon>	
+								<u-icon  :label="item.collectNum" :name="item.hasCollect?'star-fill':'star'" color="#f4ea2a" size="25" class="iconimg-2" ></u-icon>	
 							</view>
 						</view>
 						
@@ -223,7 +223,7 @@ export default {
 			
 			.goodandcollect{
 				float: right;
-				margin-right: 60rpx;
+				margin-right: 702rpx;
 				.good{
 					float: left;
 					margin-left: 30rpx;

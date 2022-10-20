@@ -169,7 +169,9 @@
 </script>
 
 <style lang="scss" scoped>
-
+/deep/ uni-button:after{
+		border: 0;
+	}
 	
 	.title-input{
 		// background-color: red;
@@ -264,6 +266,7 @@
 			 .login{
 			    color:#49ad88;
 				font-weight: 700;
+				border:1px solid #ccc;
 			 }
 			 
 			 }
