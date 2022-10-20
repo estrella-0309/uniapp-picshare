@@ -85,17 +85,17 @@ export default {
 					data:{},
 					tempimg:[],
 					commentmsg:'',
-					commentList:{},
+					commentList:[],
 					istrue:true,
 					page:1,
 					btn:true,
 					btnsmg:{},
 				}
 			},
-			async onLoad(option) {
+			onLoad(option) {
 				this.data=option.item;
 				this.data=JSON.parse(this.data)
-				await this.initcomment();				
+				this.initcomment();		
 				let _this=this
 				uni.$on("sendsecondmsg",function(data){
 					_this.istrue=false
@@ -108,10 +108,24 @@ export default {
 			},
 			methods: {
 				async initcomment(){
-					let result=await FirstComment(this.page,this.data.id)
-					this.commentList=result.data;	
+					let result=await FirstComment(this.page,this.data.id)	
+					if(result.code=200){
+						this.commentList=result.data.records;
+					}
+					this.getSecond();
 				},
-				
+				async getSecond(){
+					for(let [index,item] of this.commentList.entries()){
+						let result=await GetSecondComment(1,this.data.id,item.id); 
+						if(result.data==null){
+							this.$set(item,'secondcommentrecords',[])
+						}
+						else{
+							this.$set(item,'secondcommentrecords',result.data.records)
+						}
+						
+					}
+				},
 				previewImage(index) {
 				  uni.previewImage({ 
 				    current:index,

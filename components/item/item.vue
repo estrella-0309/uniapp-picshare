@@ -70,29 +70,25 @@
 		
 					case 'My':
 					result=await GetMy(this.page,this.userid);
-					console.log(result)
-					if(result.code==200){
-						
-						this.list=[...this.list,...result.data.records]
-						console.log(this.list)
-					}
 					break;
 					case 'Like':
 					result=await Getlike(this.page,this.userid);
-					console.log(result)
-					if(result.code==200){
-						this.list=[...this.list,...result.data.records]
-						console.log(this.list)
-					}
 					break;
 					case 'Collect':
 					result=await GetCollect(this.page,this.userid);
-					console.log(result)
-					if(result.code==200){
-						this.list=[...this.list,...result.data.records]
-						console.log(this.list)
-					}
 					break;
+				}			
+				if(result.code==200){
+					if(result.data.records.length==0){
+						uni.showToast({
+										title:"数据到底了",
+										icon:'error',
+										duration:1000,
+						})
+					}
+					else{
+						this.list=[...this.list,...result.data.records]
+					}					
 				}
 				this.page++;
 			}

@@ -1,9 +1,9 @@
 <template>
 	<view>
-		<view v-if="List.total==0">
+		<view v-if="commentList.length==0">
 			<u-empty text="还没有评论捏" mode="list"></u-empty>
 		</view>
-		<view class="comment" v-for="res in List.records" :key="res.id" v-else>
+		<view class="comment" v-for="res in commentList" :key="res.id" v-else>
 			<view class="left"><u-avatar :text="res.userName.substr(0,1)" size="30"></u-avatar></view>
 			<view class="right">
 				<view class="top">
@@ -14,7 +14,7 @@
 				</view>
 			
 				<view class="reply-box" v-if="res.secondcommentrecords">
-					<view class="item" v-for="item in res.secondcommentrecords.records" :key="item.id">
+					<view class="item" v-for="item in res.secondcommentrecords" :key="item.id">
 						<view class="username">{{ item.userName }}</view>
 						<view class="text">{{ item.content }}</view>
 					</view>
@@ -44,25 +44,6 @@ export default {
 		};
 	},
 	mounted() {
-		console.log(this.commentList);
-	},
-	watch:{
-		commentList:{
-			async handler(newVal,oldVal){
-				console.log(newVal,"new",oldVal,"old");
-				for(let i=0;i<newVal.records.length;i++){
-					console.log(this.id,newVal.records[i].id);
-					let result=await GetSecondComment(1,this.id,newVal.records[i].id);
-					if(result.data!==null){
-						newVal.records[i].secondcommentrecords=result.data
-					}
-				}
-				this.List=newVal;
-				console.log(this.List)
-			},
-			deep:true,
-			// immediate: true
-		}
 	},
 	methods: {
 		sendsecondmsg(data){
@@ -71,10 +52,6 @@ export default {
 				data:data,
 			})
 		},
-		async getSecond(id){
-			let result=await GetSecondComment(1,this.id,id);
-			console.log(result,"second")
-		}
 	}
 };
 </script>

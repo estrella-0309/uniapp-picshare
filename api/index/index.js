@@ -298,8 +298,8 @@ export const GetMy=async(current,userId)=>{
 		url:'/photo/share/myself',
 		method:'GET',
 		data:{
-			current:1,
-			size:30,
+			current:current,
+			size:10,
 			userId:userId,
 		},
 	})

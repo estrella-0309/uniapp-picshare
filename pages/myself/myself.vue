@@ -6,8 +6,8 @@
 					<view class="basis">
 						<view class="basis-left">
 							<view class="avator">
-								<img src="static/default.jpg" alt="" v-if="avatar==null">
-								<img :src="avatar" alt="" v-else>
+								<img src="static/default.jpg" alt="">
+								<!-- <img :src="avatar" alt="" v-else> -->
 							</view>
 							<view class="username">
 								{{username}}
