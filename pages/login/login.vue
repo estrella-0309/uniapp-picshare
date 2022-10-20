@@ -68,27 +68,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@font-face {
-	  font-family: 'iconfont';  /* Project id 3699526 */
-	  src: url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.woff2?t=1665493269660') format('woff2'),
-	       url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.woff?t=1665493269660') format('woff'),
-	       url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.ttf?t=1665493269660') format('truetype');
-	}
-	.iconfont {
-	  font-family: "iconfont" !important;
-	  font-size: 16px;
-	  font-style: normal;
-	  -webkit-font-smoothing: antialiased;
-	  -moz-osx-font-smoothing: grayscale;
-	}
 	
-	.icon-yanjing:before {
-	  content: "\e6cf";
-	}
-	
-	.icon-yanjing1:before {
-	  content: "\e6d0";
-	}
 	::-webkit-input-placeholder{
 		color:#76c2a5;
 	}
