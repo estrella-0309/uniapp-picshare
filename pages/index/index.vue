@@ -223,7 +223,7 @@ export default {
 			
 			.goodandcollect{
 				float: right;
-				margin-right: 702rpx;
+				margin-right: 70rpx;
 				.good{
 					float: left;
 					margin-left: 30rpx;

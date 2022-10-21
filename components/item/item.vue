@@ -1,15 +1,38 @@
 <template>
 	
 	<view class="box">
-		<view v-if="!list.length>0">
-			
+			<!-- <u-image src="/static/bird.jpg" width="100%"  mode="widthFix"  border-radius="10"></u-image> -->		
+		<!-- <view v-if="!list.length>0">
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
-		</view>
-		<view class="list" v-for="(item,index) in list" :key="index">
+		</view> -->
+	<!-- 	<view class="list" v-for="(item,index) in list" :key="index">
 				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>		
 				<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon>		
+			</view> -->
+			<view class="list" >
+				<view class="listimg">
+					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
+				</view>
 			</view>
-			
+			<view class="list" >
+				<view class="listimg">
+					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
+				</view>
+			</view>
+			<view class="list" >
+				<view class="listimg">
+					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
+				</view>
+			</view>
+					<!-- <u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon> -->		
+				<!-- <view class="list" >
+						<u-image src="/static/default.jpg"  width="100%"  mode="widthFix"  border-radius="10%"></u-image> -->		
+					<!-- 	<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon>	 -->	
+					<!-- </view> -->
+					<!-- <view class="list" >
+							<u-image src="/static/checked.png"  width="100%"  mode="widthFix"  border-radius="10%"></u-image>	 -->	
+						<!-- 	<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon> -->		
+
 		</view>
 		</view>
 	</view>
@@ -31,7 +54,8 @@
 			 }
 		},
 		mounted() {
-			this.getData()
+			console.log(2)
+			// this.getData()
 		},
 		methods:{
 			async Delete(item){
@@ -42,35 +66,36 @@
 					})
 				}
 			},
-			async getData(){
-				console.log(this.page,"page")
-				let result;
-				switch(this.type.txt){
+		// 	async getData(){
+		// 		console.log(this.page,"page")
+		// 		let result;
+		// 		switch(this.type.txt){
 		
-					case 'My':
-					result=await GetMy(this.page,this.userid);
-					break;
-					case 'Like':
-					result=await Getlike(this.page,this.userid);
-					break;
-					case 'Collect':
-					result=await GetCollect(this.page,this.userid);
-					break;
-				}			
-				if(result.code==200){
-					if(result.data.records.length==0){
-						uni.showToast({
-										title:"数据到底了",
-										icon:'error',
-										duration:1000,
-						})
-					}
-					else{
-						this.list=[...this.list,...result.data.records]
-					}					
-				}
-				this.page++;
-			}
+		// 			case 'My':
+		// 			result=await GetMy(this.page,this.userid);
+		// 			break;
+		// 			case 'Like':
+		// 			result=await Getlike(this.page,this.userid);
+		// 			break;
+		// 			case 'Collect':
+		// 			result=await GetCollect(this.page,this.userid);
+		// 			break;
+		// 		}
+		// 					console.log(result,this.type.txt)
+		// 		if(result.code==200){
+		// 			if(result.data.records.length==0){
+		// 				uni.showToast({
+		// 								title:"数据到底了",
+		// 								icon:'error',
+		// 								duration:1000,
+		// 				})
+		// 			}
+		// 			else{
+		// 				this.list=[...this.list,...result.data.records]
+		// 			}					
+		// 		}
+		// 		this.page++;
+		// 	}
 		},
 		computed: {
 			...mapState({
@@ -86,13 +111,25 @@
 	 .box{
 		 display: flex;
 		  flex-wrap: wrap;
+		  // height: 600px;
 		 .list{
 			  background-color:#DFE0EF ;
 		 		 margin-right:13rpx;
 				 margin-bottom: 20rpx;		
-		 		 width:49%;			 
-				 border-radius:10px;
-				 position: absolute;
+		 		 width:350rpx;			 
+				 // border-radius:10px;
+				 // position: absolute;
+				 background-color: red;
+				 .listimg{
+					 width: 100%;
+					
+					 image{
+						 // display: inline-block;
+						  height: 100%;
+						 max-width: 100%;
+					 }
+				 }
+				    // flex-shrink: 0; 
 		 }
 		 .list:nth-child(even){
 			 margin-right:0;

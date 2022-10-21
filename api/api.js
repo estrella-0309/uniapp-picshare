@@ -11,9 +11,6 @@ const api=(Option)=>{
 		uni.showLoading({
 			title:'加载中'
 		})
-		setTimeout(function () {
-		     uni.hideLoading();
-		}, 1000);	
 		if(Option.hasOwnProperty('Content-Type')){
 			header['Content-Type']=Option["Content-Type"]
 		}
@@ -23,7 +20,7 @@ const api=(Option)=>{
 			header:header,
 			data:Option.data||{},
 			success:res=>{		
-				// uni.hideLoading()
+				uni.hideLoading()
 				resolve(res.data)
 			},
 			fail:err=>{

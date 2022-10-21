@@ -79,7 +79,7 @@
 					duration="100"
       @change="changeSwiper"
       :current="currentIndex"
-      :style="{ height: swiperHeight + 'px' }">
+      :style="{ height: swiperHeight}">
 			 			 <swiper-item v-for="(item, index) in dataList" :key="index">
 			 			        <view :id="'content-wrap' + index">
 			 			          <item :type="item" ref="Data"></item>
@@ -104,11 +104,11 @@
 		},
 		data() {
 			return {
+				swiperHeight: 0,
 				focusNum:0,
 				likeNum:0,
 				collectNum:0,
 				sexx:'男',
-				swiperHeight: 0,
 				currentIndex: 0,
 				scoll: [{
 					txt: '我的'
@@ -137,23 +137,28 @@
 			)
 
 		},
-		async onLoad(){
+		onLoad(){
 			if(this.sex!==null){
 				console.log(this.sex,"sex")
 				this.sexx=this.sex==1?'男':'女';
 			}
-			let result;
-			result=await GetCollect(1,this.id);
-			this.collectNum=result.data.total
-			result=await Getlike(1,this.id);
-			this.likeNum=result.data.total
-			result=await GetFocus(1,this.id);
-			this.focusNum=result.data.total
+			console.log(1)
+			// let result;
+			// result=await GetCollect(1,this.id);
+			// this.collectNum=result.data.total
+			// result=await Getlike(1,this.id);
+			// this.likeNum=result.data.total
+			// result=await GetFocus(1,this.id);
+			// this.focusNum=result.data.total 
+			
+			
+		
+		},
+		mounted() {
+			console.log(3)
 			this.$nextTick(() => {
 			      this.setSwiperHeight();
 			    });
-			
-			
 		},
 		methods: {
 			getDate(date){
@@ -189,7 +194,7 @@
 					url:'/pages/alter/alter'
 				})
 			},
-			bindChange: function(e) {
+			bindChange(e) {
 							this.currentIndex = e.detail.current
 						},
 						//点击tab切换

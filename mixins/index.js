@@ -7,21 +7,38 @@ let Checked = {
 			if (item.hasFocus) {
 				item.hasFocus = false;
 				let result=await UnFocus(item.pUserId,userId);
-				console.log(result)
-				uni.showToast({
-					title: "取消关注",
-					icon: "success",
-					duration: 1000,
-				});
+				if(result.code==200){
+					uni.showToast({
+						title: "取消关注",
+						icon: "success",
+						duration: 1000,
+					});
+				}
+				else{
+					uni.showToast({
+						title: result.msg,
+						icon: "error",
+						duration: 1000,
+					});
+				}
 			} else {
 				item.hasFocus = true;
 				let result=await Focus(item.pUserId,userId)
-				console.log(result)
-				uni.showToast({
-					title: "关注成功",
-					icon: "success",
-					duration: 1000,
-				});
+				if(result.code==200){
+					uni.showToast({
+						title: "关注成功",
+						icon: "success",
+						duration: 1000,
+					});
+				}
+				else{
+					uni.showToast({
+						title: result.msg,
+						icon: "error",
+						duration: 1000,
+					});
+				}
+				
 			}
 		},
 		//点赞

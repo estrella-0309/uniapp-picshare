@@ -78,6 +78,7 @@ export const AddFirstComment=async(content,shareId,userId,userName)=>{
 	let result =await api({
 		url:'/photo/comment/first',
 		method:'POST',
+		'Content-Type':'application/json',
 		data:{
 			content:content,
 			shareId:shareId,
@@ -241,6 +242,7 @@ export const AddShare=async(content,imageCode,pUserId,title)=>{
 	let result =await api({
 		url:'/photo/share/add',
 		method:'POST',
+		'Content-Type':'application/json',
 		data:{
 			content:content,
 			imageCode:imageCode,
@@ -319,7 +321,7 @@ export const GetSave=async(current,userId)=>{
 	return result
 }
 //保存图文分享
-export const Sava=async(content,imageCode,pUserId,title)=>{
+export const Saveimg=async(content,imageCode,pUserId,title)=>{
 	let result =await api({
 		url:'/photo/share/save',
 		method:'POST',
@@ -334,10 +336,9 @@ export const Sava=async(content,imageCode,pUserId,title)=>{
 }
 //修改用户信息
 export const Update=async(avatar,id,introduce,sex,username)=>{
-	console.log(avatar,id,introduce,sex,username,"in")
 	let result =await api({
 		url:'/photo/user/update',
-		// "Content-Type": "application/x-www-form-urlencoded",
+		'Content-Type':'application/json',
 		method:'POST',
 		data:{
 			avatar:'avatar',

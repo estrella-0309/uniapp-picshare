@@ -12,7 +12,7 @@
 				  	</view>	
 							<view class="header-right">
 								 <view class="focus">
-									<u-icon  label="关注" :name="data.hasFocus?'heart-fill':'heart'" size="35" label-size="25" @click="ClickFocus(data,userid)"></u-icon>
+									<u-icon   color="#f4ea2a"  label="关注" :name="data.hasFocus?'heart-fill':'heart'" size="35" label-size="25" @click="ClickFocus(data,userid)"></u-icon>
 								 </view>			 	
 							</view>
 				</view>
@@ -43,16 +43,16 @@
 				<comment :commentList="commentList" :id="this.data.id"></comment>
 				<view class="fixedbar" v-if="istrue"> 
 					<view class="like" @click="ClickLike(data,userid)">
-						<u-icon  label="点赞" :name="data.hasLike?'thumb-up-fill':'thumb-up'"  size="35"  label-size="25"></u-icon>
+						<u-icon   color="#f4ea2a"  label="点赞" :name="data.hasLike?'thumb-up-fill':'thumb-up'"  size="35"  label-size="25"></u-icon>
 						
 					</view>
 					
 					<view class="comment">
-						<u-icon  label="评论" name="email" size="35"  label-size="25" @click="istrue=false"></u-icon>
+						<u-icon  label="评论"   color="#f4ea2a" name="email" size="35"  label-size="25" @click="istrue=false"></u-icon>
 					</view>
 				
 					<view class="collect"    @click="ClickCollect(data,userid)">
-						<u-icon  label="收藏" :name="data.hasCollect?'star-fill':'star'" size="35"  label-size="25"></u-icon>
+						<u-icon   color="#f4ea2a"  label="收藏" :name="data.hasCollect?'star-fill':'star'" size="35"  label-size="25"></u-icon>
 					</view>
 				</view>
 				<view class="fixedbar" v-else="istrue" >
@@ -67,12 +67,6 @@
 <script>
 import {Detail,AddFirstComment,FirstComment,GetSecondComment,SecondComment} from "@/api/index/index.js"
 import {mapState} from "vuex"
-import Unchecked from '@/static/checked.png'
-import Ungood from '@/static/good.png'
-import good from '@/static/good-h.png'
-import checked from '@/static/checked-h.png'
-import Uncollect from '@/static/collect.png'
-import collect from '@/static/collect-h.png'
 import Checked from '@/mixins/index.js'
 import comment from '@/components/comment/index.vue'
 export default {
@@ -98,6 +92,7 @@ export default {
 				this.initcomment();		
 				let _this=this
 				uni.$on("sendsecondmsg",function(data){
+					console.log("sendsuccess")
 					_this.istrue=false
 					_this.btn=false;
 					_this.btnmsg=data.data;

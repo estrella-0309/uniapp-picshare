@@ -35,7 +35,7 @@
 </template>
 
 <script>
-	import {Update} from "@/api/index/index.js"
+	import {Update,Upload} from "@/api/index/index.js"
 	import {mapState} from "vuex"
 	export default {
 		data() {
@@ -109,9 +109,8 @@
 						this.value=e
 						console.log(this.value)
 					},
-					// 选中任一radio时，由radio-group触发
 					radioGroupChange(e) {
-						// console.log(e);
+
 					},
 			async submit() {
 				let tempsex=null,tempname,tempintr,tempurl;
@@ -130,16 +129,52 @@
 				else{
 					tempname=this.user
 				}
-				console.log(this.urls,this.id,tempintr,tempsex,tempname)
+				
+				if(this.urls!=null){
+					let imgurl=[{
+						name:'fileList',
+						uri:this.urls
+					}];
+					let imgresult=JSON.parse(await Upload(imgurl));
+					console.log(imgresult)
+					this.urls= imgresult.data.imageUrlList[0]
+				}
+				console.log(this.urls,"??")
 				let result=await Update(this.urls,this.id,tempintr,tempsex,tempname)
 				console.log(result)
+				if(result.code==200){
+					
+					let data={
+						id:this.id,
+						appKey:this.appKey,
+						username:tempsex,
+						password:null,
+						createTime:"1664769422055",
+						lastUpdateTime:"1664769422055",
+						username:tempname,
+						sex:tempsex,
+						introduce:tempintr,
+						avatar:this.urls,
+						lastUpdateTime:new Date().getTime()
+					}
+					this.$store.dispatch("getUserList",data);
+					uni.showToast({
+						title:"修改成功",
+						icon: "success",
+						duration: 1000,
+					})
+				}
+				
 				
 			},
 			async alter(){
 				let result=await Update(this.avatar,this.userid,this.introduce,this.sex,this.username)
+				let data={
+					
+				}
 				console.log(result)
 				if(result.code==200){
-					this.$store.dispatch("getUserList",result.data);
+					this.$store.dispatch("getUserList",);
 					
 					uni.showToast({
 						title:'修改成功',

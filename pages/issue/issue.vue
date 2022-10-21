@@ -41,18 +41,28 @@
 			  <u-icon name="plus" size="60" color="#aaa" />
 			  <view class="text">选择照片</view>
 			</view>
-
 		</view>
 
 		<view class="btns">
-		  <u-button type="primary" size="default" @click="sendFeed" :disabled="uploadStatus">发布动态</u-button>
+			<view class="btnbtn">
+				 <u-button type="primary" size="default"  :disabled="uploadStatus" class="save" @click="saveissue" >保存</u-button>
+				 <u-button type="success" size="default" @click="sendFeed" :disabled="uploadStatus" class="send">发布动态</u-button>
+				  <u-button type="primary" size="default" @click="open" :disabled="uploadStatus" class="savebox">保存箱</u-button>
+			</view>
+		 <uni-popup ref="popup" type="bottom" background-color="#fff">
+			 <view class="savebox">
+			 	<view v-for="item in Save" :key="item.id">
+			 		{{item.imageCode}}
+			 	</view>
+			 </view>
+		 </uni-popup>
 		</view>
 
   </view>
 </template>
 <script>
 	import {mapState} from "vuex"
-	import {Upload,AddShare} from '@/api/index/index.js'
+	import {Upload,AddShare,Saveimg,GetSave} from '@/api/index/index.js'
 	export default {
 		data() {
 			return {
@@ -61,9 +71,25 @@
 			  uploadPicsList: [],
 			  uploadStatus: false,
 			  imgCode:'',
+			  show:true,
+			  Save:[],
+			  page:1,
 			}
 		},
+		onLoad(){
+			this.getsave();
+		},
 		methods: {
+			open(){
+				this.$refs.popup.open('buttom')
+			},
+			async getsave(){
+				let result=await GetSave(this.page,this.id);
+				console.log(result)
+				if(result.code==200){
+					this.Save=result.data.records
+				}
+			},
 			chosePicsAndUpload() {
 			  let count = 9 - this.uploadPicsList.length;
 			  if (this.uploadPicsList.length >= 9) {
@@ -101,66 +127,101 @@
 			},
 			// 删除图片
 			removeImage(index) {
+				
 			  this.uploadPicsList.splice(index, 1);
 			},
 			// 发布动态
+			async saveissue(){
+				this.uploadStatus = true
+				if (this.title == "") {
+				  uni.showToast({
+				    title: "标题不能为空",
+				    icon: "error",
+				    duration: 1000,
+				  })
+				  this.uploadStatus = false
+				  return
+				}
+				if (this.content == "") {
+					
+				  uni.showToast({
+				    title: "描述不能为空",
+				    icon: "error",
+				    duration: 2000,
+				  })
+				
+				  this.uploadStatus = false
+				  return
+				}
+				
+				if (this.uploadPicsList.length <= 0) {
+				  uni.showToast({
+				    title: "请选择照片",
+				    icon: "error",
+				    duration: 1000,
+				  })
+				  this.uploadStatus = false
+				  return
+				}
+				await this.uploaded()
+				let saveresult=await Saveimg(this.content,this.imgCode,this.id,this.title);
+				this.uploadStatus = false
+				 console.log(saveresult);
+				 
+			},
+			async uploaded(){
+				const upimgslist=this.uploadPicsList.map(item=>{
+								  return {
+									  name:'fileList',
+									  uri:item.path
+								  }
+				})
+				let result=JSON.parse(await Upload(upimgslist));
+				console.log(result); 
+				if(result.code==500){
+								 uni.showToast({
+										title: '图片格式不支持',
+										icon: 'error',
+								 	})
+									this.uploadStatus = false
+									return
+				}
+				this.imgCode=result.data.imageCode;
+			},
 			async sendFeed() {
-			  // 如果正在上传中则等待
-			  if (this.uploadStatus) return
-			  this.uploadStatus = true
-			  // 如果描述为空则不进行发布
-			  if (this.title == "") {
-			    uni.showToast({
-			      title: "标题不能为空",
-			      icon: "loading",
-			      duration: 1000,
-			    })
-			    this.uploadStatus = false
-			    return
-			  }
-			  if (this.content == "") {
-			    uni.showToast({
-			      title: "描述不能为空",
-			      icon: "loading",
-			      duration: 1000,
-			    })
-			    this.uploadStatus = false
-			    return
-			  }
-
-			  if (this.uploadPicsList.length <= 0) {
-			    uni.showToast({
-			      title: "请选择照片",
-			      icon: "loading",
-			      duration: 1000,
-			    })
-			    this.uploadStatus = false
-			    return
-			  }
-			  
-			  uni.showToast({
-			    title: "动态发布中...",
-			    icon: "loading",
-			    duration: 60000,
-			  });
-			  console.log(this.uploadPicsList)
-			  const upimgslist=this.uploadPicsList.map(item=>{
-				  return {
-					  name:'fileList',
-					  uri:item.path
-				  }
-			  })
-			  let result=JSON.parse(await Upload(upimgslist));
-			  console.log(result); 
-			  if(result.code==500){
-				 uni.showToast({
-						title: '图片格式不支持',
-						icon: 'error',
-				 	})
-					this.uploadStatus = false
-					return
-			  }
-			  this.imgCode=result.data.imageCode;
+				this.uploadStatus = true
+				if (this.title == "") {
+				  uni.showToast({
+				    title: "标题不能为空",
+				    icon: "error",
+				    duration: 1000,
+				  })
+				  this.uploadStatus = false
+				  return
+				}
+				if (this.content == "") {
+					
+				  uni.showToast({
+				    title: "描述不能为空",
+				    icon: "error",
+				    duration: 2000,
+				  })
+				
+				  this.uploadStatus = false
+				  return
+				}
+				
+				if (this.uploadPicsList.length <= 0) {
+					console.log(1)
+				  uni.showToast({
+				    title: "请选择照片",
+				    icon: "error",
+				    duration: 1000,
+				  })
+				  this.uploadStatus = false
+				  return
+				}
+			  await this.uploaded();
 			  let addresult=await AddShare(this.content,this.imgCode,this.id,this.title);
 			  console.log(addresult);
 			  if(addresult.code==200){
@@ -268,5 +329,18 @@
 		position: fixed;
 		bottom: 70rpx;
 		left: 25rpx;
+		.btnbtn{
+			display: flex;
+			.save{
+				flex:1;
+			}
+			.send{
+				margin: 0 20rpx;
+				flex:3;
+			}
+			.savebox{
+				flex:1;
+			}
+		}
 	}
 </style>
