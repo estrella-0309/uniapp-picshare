@@ -49,20 +49,35 @@
 				 <u-button type="success" size="default" @click="sendFeed" :disabled="uploadStatus" class="send">发布动态</u-button>
 				  <u-button type="primary" size="default" @click="open" :disabled="uploadStatus" class="savebox">保存箱</u-button>
 			</view>
-		 <uni-popup ref="popup" type="bottom" background-color="#fff">
-			 <view class="savebox">
-			 	<view v-for="item in Save" :key="item.id">
-			 		{{item.imageCode}}
-			 	</view>
-			 </view>
-		 </uni-popup>
+		
 		</view>
+		<uni-popup ref="popup" type="bottom" background-color="#fff">
+					 <view class="popbox">
+						 <u-empty text="暂无保存" mode="list" v-if="Save==null" style="height: 40%;"></u-empty>
+					 	<view v-for="item in Save" :key="item.id" v-else>
+					 		<view >
+					 			<image :src="item.imageUrlList[0]" mode="" mode="scaleToFill" class="images"></image>
+					 		</view>
+							<div class="box-right">
+								<view class="title">
+									{{item.title}}
+								</view>
+								<view class="content">
+									{{item.content}}
+								</view>
+							</div>
+							<view class="box-issue">
+								<u-button   size="mini" shape="square" type="primary" style="margin-top: 65rpx; width: 60%;" @click="saveissues(item)">发布</u-button>
+							</view>
+					 	</view>
+					 </view>
+		</uni-popup>
 
   </view>
 </template>
 <script>
 	import {mapState} from "vuex"
-	import {Upload,AddShare,Saveimg,GetSave} from '@/api/index/index.js'
+	import {Upload,AddShare,Saveimg,GetSave,Change} from '@/api/index/index.js'
 	export default {
 		data() {
 			return {
@@ -80,6 +95,17 @@
 			this.getsave();
 		},
 		methods: {
+			async saveissues(item){
+				let result=await Change(item.content,item.id,item.imageCode,item.pUserId,item.title) 
+				if(result.code==200){
+					uni.showToast({
+						title:'发布成功',
+						icon:'success',
+						duration:1000,
+					})
+					this.getsave()
+				}
+			},
 			open(){
 				this.$refs.popup.open('buttom')
 			},
@@ -87,8 +113,14 @@
 				let result=await GetSave(this.page,this.id);
 				console.log(result)
 				if(result.code==200){
-					this.Save=result.data.records
+					if(result.data==null){
+						this.Save=null
+					}
+					else{
+						this.Save=result.data.records
+					}
 				}
+				
 			},
 			chosePicsAndUpload() {
 			  let count = 9 - this.uploadPicsList.length;
@@ -166,7 +198,7 @@
 				await this.uploaded()
 				let saveresult=await Saveimg(this.content,this.imgCode,this.id,this.title);
 				this.uploadStatus = false
-				 console.log(saveresult);
+				 this.getsave()
 				 
 			},
 			async uploaded(){
@@ -341,6 +373,36 @@
 			.savebox{
 				flex:1;
 			}
+		}
+	}
+	.popbox>view{
+		width: 750rpx;
+		height: 200rpx;
+		background-color: #f0f0f0;
+		margin: 10rpx 0rpx;
+		display: flex;
+		.images{
+			margin-left: 40rpx;
+			width: 200rpx;
+			height: 200rpx;
+			flex:1;
+		}
+		.box-right{
+			flex:3;
+			.title{
+				font-size: 20px;
+				font-weight: 700;
+				margin:20rpx 0 0 40rpx;
+			}
+			.content{
+				color: #b2b2b2;
+				margin-left:40rpx;
+				margin-top: 10rpx;
+			}
+		}
+		.box-issue{
+			flex:1;
+			margin-right: 50rpx;
 		}
 	}
 </style>
