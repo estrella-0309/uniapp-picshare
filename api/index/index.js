@@ -341,7 +341,7 @@ export const Update=async(avatar,id,introduce,sex,username)=>{
 		'Content-Type':'application/json',
 		method:'POST',
 		data:{
-			avatar:'avatar',
+			avatar:avatar,
 			id:id,
 			introduce:introduce,
 			sex:sex,

@@ -1,38 +1,27 @@
 <template>
 	
 	<view class="box">
-			<!-- <u-image src="/static/bird.jpg" width="100%"  mode="widthFix"  border-radius="10"></u-image> -->		
-		<!-- <view v-if="!list.length>0">
+		<view v-if="!list.length>0">
+			
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
-		</view> -->
-	<!-- 	<view class="list" v-for="(item,index) in list" :key="index">
-				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>		
-				<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon>		
-			</view> -->
-			<view class="list" >
-				<view class="listimg">
-					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
-				</view>
+		</view>
+		<view class="list" v-for="(item,index) in list" :key="index">
+		
+			<view class="list-img">
+				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>
 			</view>
-			<view class="list" >
-				<view class="listimg">
-					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
-				</view>
+			<view class="list-con">
+					<view class="list-foot">			
+						<view class="title">{{item.title}}</view>
+						<view class="content">{{item.content}}</view>
+						<div class="icon" v-if="type.txt=='My'">
+								<u-icon   name="trash"  size="25"  @click="Delete(item)"></u-icon>		
+						</div>
+						</view>
+					</view>
+				
 			</view>
-			<view class="list" >
-				<view class="listimg">
-					 	<image src="/static/bird.jpg" mode="widthFix"></image>		
-				</view>
-			</view>
-					<!-- <u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon> -->		
-				<!-- <view class="list" >
-						<u-image src="/static/default.jpg"  width="100%"  mode="widthFix"  border-radius="10%"></u-image> -->		
-					<!-- 	<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon>	 -->	
-					<!-- </view> -->
-					<!-- <view class="list" >
-							<u-image src="/static/checked.png"  width="100%"  mode="widthFix"  border-radius="10%"></u-image>	 -->	
-						<!-- 	<u-icon  class="icon" v-if="type.txt=='My'"  name="trash"  size="25"  @click="Delete(item)"></u-icon> -->		
-
+			
 		</view>
 		</view>
 	</view>
@@ -54,8 +43,7 @@
 			 }
 		},
 		mounted() {
-			console.log(2)
-			// this.getData()
+			this.getData()
 		},
 		methods:{
 			async Delete(item){
@@ -66,36 +54,35 @@
 					})
 				}
 			},
-		// 	async getData(){
-		// 		console.log(this.page,"page")
-		// 		let result;
-		// 		switch(this.type.txt){
+			async getData(){
+				console.log(this.page,"page")
+				let result;
+				switch(this.type.txt){
 		
-		// 			case 'My':
-		// 			result=await GetMy(this.page,this.userid);
-		// 			break;
-		// 			case 'Like':
-		// 			result=await Getlike(this.page,this.userid);
-		// 			break;
-		// 			case 'Collect':
-		// 			result=await GetCollect(this.page,this.userid);
-		// 			break;
-		// 		}
-		// 					console.log(result,this.type.txt)
-		// 		if(result.code==200){
-		// 			if(result.data.records.length==0){
-		// 				uni.showToast({
-		// 								title:"数据到底了",
-		// 								icon:'error',
-		// 								duration:1000,
-		// 				})
-		// 			}
-		// 			else{
-		// 				this.list=[...this.list,...result.data.records]
-		// 			}					
-		// 		}
-		// 		this.page++;
-		// 	}
+					case 'My':
+					result=await GetMy(this.page,this.userid);
+					break;
+					case 'Like':
+					result=await Getlike(this.page,this.userid);
+					break;
+					case 'Collect':
+					result=await GetCollect(this.page,this.userid);
+					break;
+				}			
+				if(result.code==200){
+					if(result.data.records.length==0){
+						uni.showToast({
+										title:"数据到底了",
+										icon:'error',
+										duration:1000,
+						})
+					}
+					else{
+						this.list=[...this.list,...result.data.records]
+					}					
+				}
+				this.page++;
+			}
 		},
 		computed: {
 			...mapState({
@@ -111,33 +98,40 @@
 	 .box{
 		 display: flex;
 		  flex-wrap: wrap;
-		  // height: 600px;
 		 .list{
 			  background-color:#DFE0EF ;
+		 		 // background-color: blue;
 		 		 margin-right:13rpx;
-				 margin-bottom: 20rpx;		
-		 		 width:350rpx;			 
-				 // border-radius:10px;
-				 // position: absolute;
-				 background-color: red;
-				 .listimg{
-					 width: 100%;
-					
-					 image{
-						 // display: inline-block;
-						  height: 100%;
-						 max-width: 100%;
-					 }
-				 }
-				    // flex-shrink: 0; 
+				 margin-bottom: 20rpx;
+				 // border:1px solid black;
+		 		 width:49%;
+				 // background-color: #fff;
+				 border-radius:10px ;
+				 // height: 600rpx;
 		 }
 		 .list:nth-child(even){
 			 margin-right:0;
 		 }
+		 .title{
+			 font-size:23px;
+		 }
+		 .content{
+				font-size:16px;
+				overflow: hidden;
+			    text-overflow: ellipsis;
+			    white-space: nowrap;
+		 }
 		 .icon{
-			position: relative;
-			bottom: 0;
-			right: 0;
+			 display: flex;
+			 margin-top: 10rpx;
+			 width:100%;
+			 justify-content: flex-end;
+			 .like{		 
+				flex:1;
+			 }
+			 .collect{
+				flex:1;
+			 }
 		 }
 	 }
 

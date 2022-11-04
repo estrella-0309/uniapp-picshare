@@ -67,7 +67,7 @@
 								</view>
 							</div>
 							<view class="box-issue">
-								<u-button   size="mini" shape="square" type="primary" style="margin-top: 65rpx; width: 60%;" @click="saveissues(item)">发布</u-button>
+								<u-button   size="mini" shape="square" type="primary" style="margin-top: 65rpx; width: 60%;" @click="saveissuebox(item)">发布</u-button>
 							</view>
 					 	</view>
 					 </view>
@@ -95,7 +95,7 @@
 			this.getsave();
 		},
 		methods: {
-			async saveissues(item){
+			async saveissuebox(item){
 				let result=await Change(item.content,item.id,item.imageCode,item.pUserId,item.title) 
 				if(result.code==200){
 					uni.showToast({

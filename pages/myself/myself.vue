@@ -79,7 +79,7 @@
 					duration="100"
       @change="changeSwiper"
       :current="currentIndex"
-      :style="{ height: swiperHeight}">
+      :style="{ height: swiperHeight+'px'}">
 			 			 <swiper-item v-for="(item, index) in dataList" :key="index">
 			 			        <view :id="'content-wrap' + index">
 			 			          <item :type="item" ref="Data"></item>
@@ -137,30 +137,29 @@
 			)
 
 		},
-		onLoad(){
+		async onLoad(){
 			if(this.sex!==null){
 				console.log(this.sex,"sex")
 				this.sexx=this.sex==1?'男':'女';
 			}
-			console.log(1)
-			// let result;
-			// result=await GetCollect(1,this.id);
-			// this.collectNum=result.data.total
-			// result=await Getlike(1,this.id);
-			// this.likeNum=result.data.total
-			// result=await GetFocus(1,this.id);
-			// this.focusNum=result.data.total 
-			
-			
-		
-		},
-		mounted() {
-			console.log(3)
+
+			await this.getdefaultData();
+			console.log(2)
 			this.$nextTick(() => {
 			      this.setSwiperHeight();
 			    });
 		},
 		methods: {
+			async getdefaultData(){
+				let result;
+				result=await GetCollect(1,this.id);
+				console.log(result)
+				this.collectNum=result.data.total
+				result=await Getlike(1,this.id);
+				this.likeNum=result.data.total
+				result=await GetFocus(1,this.id);
+				this.focusNum=result.data.total 
+			},
 			getDate(date){
 				//date是传过来的时间戳，注意需为13位，10位需*1000
 				//也可以不传,获取的就是当前时间
@@ -178,17 +177,17 @@
 			        this.setSwiperHeight();
 			      });
 			    },
-				    setSwiperHeight() {
-				      let element = "#content-wrap" + this.currentIndex;
-				      let query = uni.createSelectorQuery().in(this);
-				      query.select(element).boundingClientRect();
-				      query.exec((res) => {
-				        if (res && res[0]) {
-				          this.swiperHeight = res[0].height;
-						  console.log(this.swiperHeight,"height")
-				        }
-				      });
-				    },
+			setSwiperHeight() {
+			  let element = "#content-wrap" + this.currentIndex;
+			  let query = uni.createSelectorQuery().in(this);
+			  query.select(element).boundingClientRect();
+			  query.exec((res) => {
+				if (res && res[0]) {
+				  this.swiperHeight = res[0].height;
+				  console.log(this.swiperHeight,"height")
+				}
+			  });
+			},
 			Toalter(){
 				uni.navigateTo({
 					url:'/pages/alter/alter'
@@ -328,7 +327,7 @@
 						}
 						.sex{
 							position: relative;
-							top:-95rpx;
+							top:-85rpx;
 							left:190rpx;
 							color: #fff;
 							width: 80rpx;
