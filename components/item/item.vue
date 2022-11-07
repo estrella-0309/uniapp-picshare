@@ -1,6 +1,7 @@
 <template>
 	
 	<view class="box">
+
 		<view v-if="!list.length>0">
 			
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
@@ -13,12 +14,13 @@
 			<view class="list-con">
 					<view class="list-foot">			
 						<view class="title">{{item.title}}</view>
-						<view class="content">{{item.content}}</view>
-						<div class="icon" v-if="type.txt=='My'">
-								<u-icon   name="trash"  size="25"  @click="Delete(item)"></u-icon>		
-						</div>
+						<view class="content">
+								{{item.content}}
+								<u-icon   style="float: right;" v-if="type.txt=='My'" name="trash"  size="25"  @click="Delete(item)"></u-icon>		
 						</view>
-					</view>
+						
+						</view>
+			</view>
 				
 			</view>
 			
@@ -76,6 +78,7 @@
 										icon:'error',
 										duration:1000,
 						})
+						this.page--;
 					}
 					else{
 						this.list=[...this.list,...result.data.records]

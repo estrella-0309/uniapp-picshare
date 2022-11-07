@@ -1,5 +1,6 @@
 <template>
 	<view class="myself">
+				<uni-nav-bar title="我的"  style="font-weight:700;font-size:16px; background-color='#f8f8f8';" background-color="#f8f8f8" height="80px"></uni-nav-bar>
 		<view>
 			<view class="header">
 				<view class="information">
@@ -142,7 +143,6 @@
 				console.log(this.sex,"sex")
 				this.sexx=this.sex==1?'男':'女';
 			}
-
 			await this.getdefaultData();
 			console.log(2)
 			this.$nextTick(() => {
@@ -223,6 +223,9 @@
 </script>
 
 <style lang="scss" scoped>
+	/deep/ .uni-nav-bar-text span{
+			font-size: 16px ;
+	}
 	/deep/ .uni-scroll-view-content {
 		display: flex;
 		view{

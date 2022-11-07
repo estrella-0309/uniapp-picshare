@@ -52,7 +52,8 @@
             "path" : "pages/myself/myself",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "我的",
+				"navigationStyle": "custom",
+                // "navigationBarTitleText": "我的",
                 "enablePullDownRefresh": false,
 				"onReachBottomDistance": 0
 				
