@@ -5,18 +5,33 @@
 				resgister
 			</view>
 			<view class="user">
-				<input type="text" focus placeholder="用户名" v-model="username" adjustResize placeholder-style="color:#76c2a5"/>
-				<input :type="type" placeholder="输入密码" v-model="password" placeholder-style="color:#76c2a5" style="margin-top: 70rpx;" class="active"/>	
-					<!-- <i class="iconfont eyes" :class="Icon" @click="flag=!flag"></i> -->
-					<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
-				<input :type="type2" placeholder="请再次输入密码" v-model="password2" placeholder-style="color:#76c2a5" style="margin-top: 70rpx;" class="active"/>		
-				<!-- <i class="iconfont eyes2" :class="Icon2" @click="flag2=!flag2"></i> -->
+				<input 
+					type="text" 
+					focus 
+					placeholder="用户名" 
+					v-model="username" 
+					adjustResize 
+					placeholder-style="color:#76c2a5"/>
+				<input 
+					:type="type" 
+					placeholder="输入密码" 
+					v-model="password" 
+					placeholder-style="color:#76c2a5" 
+					style="margin-top: 70rpx;" 
+					class="active"/>	
+				<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
+				<input 
+					:type="type2" 
+					placeholder="请再次输入密码" 
+					v-model="password2" 
+					placeholder-style="color:#76c2a5" 
+					style="margin-top: 70rpx;" 
+					class="active"/>		
 				<u-icon :name="Icon2" size="20" class="eyes2" @click="flag2= !flag2"></u-icon>
 			</view>
 			<view class="btn">
 				<button class="register" @click="resgister" style="background-color: #fff;color: #409971;">注册</button>
 				<button class="register" @click="tologin">返回登录</button>
-				
 			</view>
 		</view>
 	</view>
@@ -43,18 +58,18 @@ import{Register} from '@/api/index/index.js'
 			async resgister(){ 
 				if(this.password!=this.password2){
 					uni.showToast({
-									title: "两次输入密码不相同！",
-									icon:'error',
-									duration:1000,
+						title: "两次输入密码不相同！",
+						icon:'error',
+						duration:1000,
 					});
 					return;
 				}
 				let result=await Register(this.username,this.password);
 				if(result.code==200){
 					uni.showToast({
-									title: "注册成功",
-									icon:'success',
-									duration:1000,
+						title: "注册成功",
+						icon:'success',
+						duration:1000,
 					});
 					setTimeout(function(){
 						uni.navigateTo({
@@ -64,9 +79,9 @@ import{Register} from '@/api/index/index.js'
 				}
 				else if(result.code==500){
 					uni.showToast({
-									title: result.msg,
-									icon:'error',
-									duration:1000,
+						title: result.msg,
+						icon:'error',
+						duration:1000,
 					})
 				}
 			
@@ -91,27 +106,6 @@ import{Register} from '@/api/index/index.js'
 </script>
 
 <style lang="scss" scoped>
-	@font-face {
-	  font-family: 'iconfont';  /* Project id 3699526 */
-	  src: url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.woff2?t=1665493269660') format('woff2'),
-	       url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.woff?t=1665493269660') format('woff'),
-	       url('//at.alicdn.com/t/c/font_3699526_msey3u4iufd.ttf?t=1665493269660') format('truetype');
-	}
-	.iconfont {
-	  font-family: "iconfont" !important;
-	  font-size: 16px;
-	  font-style: normal;
-	  -webkit-font-smoothing: antialiased;
-	  -moz-osx-font-smoothing: grayscale;
-	}
-	
-	.icon-yanjing:before {
-	  content: "\e6cf";
-	}
-	
-	.icon-yanjing1:before {
-	  content: "\e6d0";
-	}
 	::-webkit-input-placeholder{
 		color:#76c2a5;
 	}
@@ -119,7 +113,6 @@ import{Register} from '@/api/index/index.js'
 		box-sizing: border-box;
 		padding: 5px;
 		color: #fff;
-		
 		width: 600rpx;
 		height: 100rpx;
 		background-color:#218c64;
@@ -141,8 +134,8 @@ import{Register} from '@/api/index/index.js'
 		right: 130rpx;
 		color: #76c2a5;
 	}
-.box{
-		background-color: #409971;
+	.box{
+		background: url('../../static/background.png') no-repeat fixed center;
 		position:absolute;
 		top:0;
 		left:0;
@@ -153,8 +146,7 @@ import{Register} from '@/api/index/index.js'
 			text-align: center;
 			font-size: 20rpx;
 			padding: 100rpx;
-		}
-			
+		}	
 		.user{
 			input {
 				box-sizing: border-box;
@@ -162,10 +154,11 @@ import{Register} from '@/api/index/index.js'
 				color: #fff;
 				width: 600rpx;
 				height: 100rpx;
-				background-color:#218c64;
 				margin: 30rpx auto;
 				border-radius: 20px;
 				padding-left: 60rpx;
+				color: #000;
+				background-color:rgba(255, 255, 255, 0.5);
 			}
 			.user-forget{
 				float: right;

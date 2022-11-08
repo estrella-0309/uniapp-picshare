@@ -43,12 +43,10 @@ let Checked = {
 		},
 		//点赞
 		async ClickLike(item,userId) {
-			console.log(item)
 			if (item.hasLike) {
 				item.hasLike = false;
 				item.likeNum--;
 				let result=await UnLike(item.likeId);
-				console.log(result)
 				uni.showToast({
 					title: "取消点赞",
 					icon: "success",
@@ -72,12 +70,10 @@ let Checked = {
 		},
 		
 		async ClickCollect(item,userId) {
-			console.log(item,"item")
 			if (item.hasCollect) {
 				item.hasCollect = false;
 				item.collectNum--;
 				let result=await UnCollect(item.collectId);
-				console.log(result)
 				uni.showToast({
 					title: "取消收藏",
 					icon: "success",
@@ -87,7 +83,6 @@ let Checked = {
 				item.hasCollect = true;
 				item.collectNum++;
 				let result=await Collect(item.id,userId)
-				console.log(result)
 				if(result.code==200){
 					let temp=await Detail(item.id,userId);
 					item.collectId=temp.data.collectId;

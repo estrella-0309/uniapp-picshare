@@ -1,16 +1,20 @@
 <template>
 	<view>
 		<view v-if="commentList.length==0">
-			<u-empty text="还没有评论捏" mode="list"></u-empty>
+			<u-empty text="还没有评论捏" mode="list">
+			</u-empty>
 		</view>
 		<view class="comment" v-for="res in commentList" :key="res.id" v-else>
-			<view class="left"><u-avatar :text="res.userName.substr(0,1)" size="30"></u-avatar></view>
+			<view class="left">
+				<u-avatar :text="res.userName.substr(0,1)" size="30">	
+				</u-avatar>
+			</view>
 			<view class="right">
 				<view class="top">
 					<view class="name">{{ res.userName }}</view>
 				</view>
 				<view class="content">
-				{{ res.content }}
+					{{ res.content }}
 				</view>
 			
 				<view class="reply-box" v-if="res.secondcommentrecords">
@@ -27,23 +31,17 @@
 				
 			</view>
 		</view>
-		<view class="footer">
-			
-		</view>
 	</view>
 </template>
 
 <script>
 import {GetSecondComment} from "@/api/index/index.js"
 export default {
-
 	props:['commentList','id'],
 	data() {
 		return {
 			List:[],
 		};
-	},
-	mounted() {
 	},
 	methods: {
 		sendsecondmsg(data){
@@ -61,7 +59,6 @@ export default {
 .footer{
 	width: 750rpx;
 	height: 200rpx;
-	// background-color: red;
 }
 .comment {
 	display: flex;

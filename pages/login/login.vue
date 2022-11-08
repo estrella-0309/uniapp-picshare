@@ -37,7 +37,6 @@
 			},
 			async login(){
 				let result=await Login(this.username,this.password)
-				console.log(result)
 				if(result.code==200){
 					this.$store.dispatch("getUserList",result.data);
 					
@@ -76,10 +75,8 @@
 		box-sizing: border-box;
 		padding: 5px;
 		color: #fff;
-		
 		width: 600rpx;
 		height: 100rpx;
-		// background-color:#218c64;
 		color: #000;
 		background-color:rgba(255, 255, 255, 0.5);
 		margin: 30rpx 80rpx;
@@ -92,10 +89,8 @@
 		position: absolute;
 		top:520rpx;
 		right: 130rpx;
-		
 	}
 	.box{
-		background-color: #409971;
 		background: url('../../static/background.png') no-repeat fixed center;
 		position:absolute;
 		top:0;
@@ -108,7 +103,6 @@
 			font-size: 20rpx;
 			padding: 100rpx;
 		}
-			
 		.user{
 			input {
 				box-sizing: border-box;
@@ -116,7 +110,6 @@
 				color: #fff;
 				width: 600rpx;
 				height: 100rpx;
-				// background-color:#218c64;
 				margin: 30rpx auto;
 				border-radius: 20px;
 				padding-left: 60rpx;
@@ -126,7 +119,6 @@
 			.user-forget{
 				float: right;
 				padding-right:65rpx;
-				// color: #76c2a5;
 			}
 		}
 		.btn{
@@ -145,7 +137,6 @@
 				 background-color: transparent;
 				 border:1px solid #fff;
 				 font-weight: 700;
-
 			 }
 		 }
 	}

@@ -1,13 +1,9 @@
-<template>
-	
+<template>	
 	<view class="box">
-
 		<view v-if="!list.length>0">
-			
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
 		</view>
 		<view class="list" v-for="(item,index) in list" :key="index">
-		
 			<view class="list-img">
 				<u-image :src="item.imageUrlList[0]" width="100%" ></u-image>
 			</view>
@@ -18,16 +14,12 @@
 								{{item.content}}
 								<u-icon   style="float: right;" v-if="type.txt=='My'" name="trash"  size="25"  @click="Delete(item)"></u-icon>		
 						</view>
-						
-						</view>
+					</view>
 			</view>
 				
-			</view>
+		</view>
 			
-		</view>
-		</view>
 	</view>
-		
 </template>
 
 <script>
@@ -41,7 +33,6 @@
 			 return{
 				 list:[],
 				 page:1,
-
 			 }
 		},
 		mounted() {
@@ -60,7 +51,6 @@
 				console.log(this.page,"page")
 				let result;
 				switch(this.type.txt){
-		
 					case 'My':
 					result=await GetMy(this.page,this.userid);
 					break;
@@ -102,40 +92,35 @@
 		 display: flex;
 		  flex-wrap: wrap;
 		 .list{
-			  background-color:#DFE0EF ;
-		 		 // background-color: blue;
-		 		 margin-right:13rpx;
-				 margin-bottom: 20rpx;
-				 // border:1px solid black;
-		 		 width:49%;
-				 // background-color: #fff;
-				 border-radius:10px ;
-				 // height: 600rpx;
+			background-color:#DFE0EF ;
+			margin-right:13rpx;
+			margin-bottom: 20rpx;
+			width:49%;
+			border-radius:10px ;
 		 }
 		 .list:nth-child(even){
-			 margin-right:0;
+			margin-right:0;
 		 }
 		 .title{
-			 font-size:23px;
+			font-size:23px;
 		 }
 		 .content{
-				font-size:16px;
-				overflow: hidden;
-			    text-overflow: ellipsis;
-			    white-space: nowrap;
+			font-size:16px;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		 }
 		 .icon{
-			 display: flex;
-			 margin-top: 10rpx;
-			 width:100%;
-			 justify-content: flex-end;
-			 .like{		 
+			display: flex;
+			margin-top: 10rpx;
+			width:100%;
+			justify-content: flex-end;
+			.like{		 
 				flex:1;
-			 }
-			 .collect{
+			}
+			.collect{
 				flex:1;
-			 }
+			}
 		 }
 	 }
-
 </style>

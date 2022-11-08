@@ -7,30 +7,24 @@
 			</view>
 		</view>
 		<view class="user">
-				
-					<u-icon name="account-fill"  size="28"></u-icon><u-input v-model="user" class="title-input" placeholder="姓名"/>
-					<u-icon name="order" size="28"></u-icon><u-input v-model="intr" class="title-input" placeholder="个人介绍"/>
-					<u-icon name="性别"></u-icon><view class="title-input2">
-		<u-radio-group v-model="value" @change="radioGroupChange">
-			<u-radio 
-				@change="radioChange" 
-				v-for="(item, index) in list" :key="index" 
-				:name="item.name"
-				:disabled="item.disabled"
-			>
-				{{item.name}}
-			</u-radio>
-		</u-radio-group>
-	</view>
-					
-
-			
+			<u-icon name="account-fill"  size="28"></u-icon><u-input v-model="user" class="title-input" placeholder="姓名"/>
+			<u-icon name="order" size="28"></u-icon><u-input v-model="intr" class="title-input" placeholder="个人介绍"/>
+			<u-icon name="性别"></u-icon>
+			<view class="title-input2">
+				<u-radio-group v-model="value">
+					<u-radio 
+						@change="radioChange" 
+						v-for="(item, index) in list" :key="index" 
+						:name="item.name"
+						:disabled="item.disabled">
+							{{item.name}}
+					</u-radio>
+				</u-radio-group>
+			</view>					
 		</view>
 		<view class="btn">
 			<button class="login" @click="submit">修改资料</button>
-			
 		</view>
-		<u-action-sheet :list="actionSheetList" v-model="actionSheetShow" @click="actionSheetCallback" style="border: 0;"></u-action-sheet>
 	</view>
 </template>
 
@@ -42,37 +36,23 @@
 			
 			return {
 				list: [
-								{
-									name: '男',
-									disabled: false
-								},
-								{
-									name: '女',
-									disabled: false
-								},
-							],
-							value: '',
+						{
+							name: '男',
+							disabled: false
+						},
+						{
+							name: '女',
+							disabled: false
+						},
+				],
+				value: '',
 				user:'',
 				intr:'',
 				se:'',
-				urls:null,
-				actionSheetList: [
-								{
-									text: '男'
-								},
-								{
-									text: '女'
-								},
-								{
-									text: '保密'
-								}
-							],
-				actionSheetShow: false,
-					
+				urls:null,		
 			}
 		},
 		onLoad(){
-			console.log(this.avatar)
 			if(this.sex==1){
 				this.value='男'
 			}
@@ -95,23 +75,16 @@
 				let _this=this
 				uni.chooseImage({
 					count: 1,
-					sizeType: ["compressed"], //可以指定是原图还是压缩图，默认二者都有
-					sourceType: ["album", "camera"], //从相册选择
+					sizeType: ["compressed"], 
+					sourceType: ["album", "camera"],
 					success: (res) => {
-				
-					_this.urls = [res.tempFiles][0][0].path;
-					console.log(_this.urls)
+						_this.urls = [res.tempFiles][0][0].path;
 					},
-								
-							  });
+				});
 			},
-				radioChange(e) {
-						this.value=e
-						console.log(this.value)
-					},
-					radioGroupChange(e) {
-
-					},
+			radioChange(e) {
+				this.value=e
+			},
 			async submit() {
 				let tempsex=null,tempname,tempintr,tempurl;
 				if(this.value!==null){
@@ -136,12 +109,9 @@
 						uri:this.urls
 					}];
 					let imgresult=JSON.parse(await Upload(imgurl));
-					console.log(imgresult)
 					this.urls= imgresult.data.imageUrlList[0]
 				}
-				console.log(this.urls,"??")
 				let result=await Update(this.urls,this.id,tempintr,tempsex,tempname)
-				console.log(result)
 				if(result.code==200){
 					
 					let data={
@@ -163,16 +133,13 @@
 						icon: "success",
 						duration: 1000,
 					})
-				}
-				
-				
+				}	
 			},
 			async alter(){
 				let result=await Update(this.avatar,this.userid,this.introduce,this.sex,this.username)
 				let data={
 					
 				}
-				console.log(result)
 				if(result.code==200){
 					this.$store.dispatch("getUserList",);
 					
@@ -204,19 +171,16 @@
 </script>
 
 <style lang="scss" scoped>
-/deep/ uni-button:after{
+	/deep/ uni-button:after{
 		border: 0;
 	}
-	
 	.title-input{
-		// background-color: red;
 		position: relative;
 		top: -55rpx;
 		left: 80rpx;
 		width: 73%;
 	}
 	.title-input2{
-		// background-color: red;
 		position: relative;
 		top: -35rpx;
 		left: 100rpx;
@@ -226,7 +190,6 @@
 		box-sizing: border-box;
 		padding: 5px;
 		color: #fff;
-		
 		width: 600rpx;
 		height: 100rpx;
 		background-color:#218c64;
@@ -238,7 +201,6 @@
 	}
 	
 	.box{
-		// background-color: #409971;
 		position:absolute;
 		top:0;
 		left:0;
@@ -271,14 +233,12 @@
 				font-size: 8rpx;
 				margin-top: 20rpx;
 			}
-			}
+		}
 		.user{
 			margin-top: 50px;
 			input {
-				// border: 1px solid black;
 				box-sizing: border-box;
 				padding: 5px;
-				// color: #fff;
 				width: 600rpx;
 				height: 100rpx;
 				background-color:#f8f8f8;
@@ -303,11 +263,7 @@
 				font-weight: 700;
 				border:1px solid #ccc;
 			 }
-			 
-			 }
-			 
-		 }
-	
-	
+		}		 
+	}	
 </style>
 

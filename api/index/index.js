@@ -170,7 +170,6 @@ export const Upload=async(fileList)=>{
 			fileType:"image",
 			header:{
 				  "Accept": "application/json, text/plain, */*",
-				  // "Content-Type": "multipart/form-data",
 				  "appId": "24d8ed2ab0444b048cbd5fcdde289109",
 				  "appSecret": "300002f6abcaf485d4cb19de0695a0b049dc0",
 			 },

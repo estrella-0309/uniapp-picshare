@@ -1,6 +1,13 @@
 <template>
 	<view class="myself">
-				<uni-nav-bar title="我的"  style="font-weight:700;font-size:16px; background-color='#f8f8f8';" background-color="#f8f8f8" height="80px"></uni-nav-bar>
+		<view class="nav">
+			<view class="title">
+				我的
+			</view>
+			<view class="nav-right" @click="Tosetting()">
+				<u-icon name="setting"  size="22"></u-icon>
+			</view>
+		</view>
 		<view>
 			<view class="header">
 				<view class="information">
@@ -19,7 +26,6 @@
 							<view class="sex">
 								<view class="text">{{sexx}}</view>
 							</view>
-							  
 							<view class="create">
 								<view class="text">
 									{{getDate(lastUpdateTime)}}
@@ -34,63 +40,53 @@
 						<view class="" v-else>
 							这个人很懒，什么都没有留下
 						</view>
-						
 					</view>
 					<view class="mylists">
 						<view class="focus">
 							<view class="num">
 								{{focusNum}}
 							</view>
-							<view >
-							关注
-							</view>
+							<view>关注</view>
 						</view>
 						<view class="like">
-							<view class="num">
-								{{likeNum}}
-							</view>
-							<view >
-							喜欢
-							</view>
+							<view class="num">{{likeNum}}</view>
+							<view >喜欢</view>
 						</view>
 						<view class="collections">
-							<view class="num">
-								{{collectNum}}
-							</view>
-							<view >
-							收藏
-							</view>
+							<view class="num">{{collectNum}}</view>
+							<view>收藏</view>
 						</view>
 						<view class="setting"> 	
-							<view class="text" @click="Toalter">
-								编辑资料
-							</view>
+							<view class="text" @click="Toalter">编辑资料</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		 <div class="footer">
-			 <scroll-view class="scroll1" scroll-x="true">
-			 			<view :class="currentIndex==index ? 'select' : 'select1'" :data-current="index" @click="swichNav"
-			 				v-for="(item,index) in scoll" :key='index'>{{item.txt}}
-			 			</view>
-			 		</scroll-view>
-			 		<swiper :autoplay="false"
-					duration="100"
-      @change="changeSwiper"
-      :current="currentIndex"
-      :style="{ height: swiperHeight+'px'}">
-			 			 <swiper-item v-for="(item, index) in dataList" :key="index">
-			 			        <view :id="'content-wrap' + index">
-			 			          <item :type="item" ref="Data"></item>
-			 			        </view>
-			 			      </swiper-item>
-			 		
-			 		</swiper>
-		 </div>
+		<div class="footer">
+			<scroll-view class="scroll1" scroll-x="true">
+				<view 
+					:class="currentIndex==index?'select':'select1'" 
+					:data-current="index" 
+					@click="swichNav"
+					v-for="(item,index) in scoll" 
+					:key='index'>
+						{{item.txt}}
+				</view>
+			</scroll-view>
+			<swiper :autoplay="false"
+				duration="100"
+				@change="changeSwiper"
+				:current="currentIndex"
+				:style="{ height: swiperHeight+'px'}">
+				<swiper-item v-for="(item, index) in dataList" :key="index">
+					<view :id="'content-wrap' + index">
+					  <item :type="item" ref="Data"></item>
+					</view>
+				</swiper-item>
+			</swiper>
+		</div>
 	</view>
-	
 </template>
 
 <script>
@@ -130,30 +126,31 @@
 				},],
 			}
 		}, 
-		 onReachBottom(){
+		onReachBottom(){
 			this.$nextTick(async () =>{
 				await this.$refs.Data[this.currentIndex].getData()
 					this.setSwiperHeight()
 				}
 			)
-
 		},
 		async onLoad(){
 			if(this.sex!==null){
-				console.log(this.sex,"sex")
 				this.sexx=this.sex==1?'男':'女';
 			}
 			await this.getdefaultData();
-			console.log(2)
 			this.$nextTick(() => {
 			      this.setSwiperHeight();
 			    });
 		},
 		methods: {
+			Tosetting(){
+				uni.navigateTo({
+						url:'/pages/setting/setting',
+					});
+			},
 			async getdefaultData(){
 				let result;
 				result=await GetCollect(1,this.id);
-				console.log(result)
 				this.collectNum=result.data.total
 				result=await Getlike(1,this.id);
 				this.likeNum=result.data.total
@@ -161,32 +158,29 @@
 				this.focusNum=result.data.total 
 			},
 			getDate(date){
-				//date是传过来的时间戳，注意需为13位，10位需*1000
-				//也可以不传,获取的就是当前时间
 			      var time = new Date(Number(date));
-			      var year= time.getFullYear()  //年
-			      var month = ("0" + (time.getMonth() + 1)).slice(-2); //月
-			      var day = ("0" + time.getDate()).slice(-2); //日
+			      var year= time.getFullYear() 
+			      var month = ("0" + (time.getMonth() + 1)).slice(-2); 
+			      var day = ("0" + time.getDate()).slice(-2);
 			      var mydate = year + "-" + month + "-" + day;
 			      return mydate
 			    },
-			 changeSwiper(e) {
+			changeSwiper(e) {
 			      this.currentIndex = e.detail.current;
-			      //动态设置swiper的高度，使用nextTick延时设置
 			      this.$nextTick(() => {
 			        this.setSwiperHeight();
 			      });
-			    },
+			},
 			setSwiperHeight() {
-			  let element = "#content-wrap" + this.currentIndex;
-			  let query = uni.createSelectorQuery().in(this);
-			  query.select(element).boundingClientRect();
-			  query.exec((res) => {
-				if (res && res[0]) {
-				  this.swiperHeight = res[0].height;
-				  console.log(this.swiperHeight,"height")
-				}
-			  });
+				let element = "#content-wrap" + this.currentIndex;
+				let query = uni.createSelectorQuery().in(this);
+				query.select(element).boundingClientRect();
+				query.exec((res) => {
+					if (res && res[0]) {
+					  this.swiperHeight = res[0].height;
+					  console.log(this.swiperHeight,"height")
+					}
+				  });
 			},
 			Toalter(){
 				uni.navigateTo({
@@ -196,7 +190,6 @@
 			bindChange(e) {
 							this.currentIndex = e.detail.current
 						},
-						//点击tab切换
 						swichNav: function(e) {
 							var that = this;
 							if (this.currentIndex === e.target.dataset.current) {
@@ -234,36 +227,44 @@
 			font-size: 20rpx;
 		}
 	}
-	
-	.scroll1 {
-
-			width: 100%;
-			display:flex;
-			// padding: 20rpx 20rpx;
-			background-color: #ffffff;
-	 
-			& view {
-				flex:1;
-				font-size:25px;
-			}
-	 
-	 
-			& view:first-child:before {
-				display: none;
-			}
-	 
-			.select {
-				color: #f6a54d;
-				border-bottom: 1px solid #f6a54d;
-				// font-size: 40rpx;
-			}
-	 
-			.select1 {
-				color: #808080;
-			}
+	.nav{
+		padding-top: 70rpx;
+		display: fixed;
+		background-color: #f8f8f8;
+		height: 44px;
+		.title{
+			float: left;
+			font-size: 16px;
+			margin-left: 340rpx;
+			line-height: 44px;
 		}
-	 
-		
+		width: 750rpx;
+		.nav-right{
+			float: right;
+			margin-right: 40rpx;
+			margin-top: 14rpx;
+		}
+	}
+	.scroll1 {
+		width: 100%;
+		display:flex;
+		background-color: #ffffff;
+		& view {
+			flex:1;
+			font-size:25px;
+		}
+		& view:first-child:before {
+			display: none;
+		}
+ 
+		.select {
+			color: #f6a54d;
+			border-bottom: 1px solid #f6a54d;
+		}
+		.select1 {
+			color: #808080;
+		}
+	}	
 	.text{
 		width: 80%;
 		height: 40%;
@@ -275,26 +276,21 @@
 		background-color:rgba(255, 255, 255, 0.5);
 	}
 	.myself{
-		
 		box-sizing: border-box;
 		.header{
 			background-color: #555360;
 			width: 750rpx;
 			height: 600rpx;
-		
 			position: absolute;
 			.information{
 				margin-top:70rpx;
 				width: 750rpx;
 				height: 680rpx;
-				
 				.basis{
 					width: 750rpx;
 					height: 250rpx;
-				
 					position: absolute;
 					.basis-left{
-				
 						width: 500rpx;
 						height: 200rpx;
 						margin: 25rpx 30rpx;
@@ -344,7 +340,6 @@
 							color: #fff;
 						}
 					}
-					
 				}				
 				.introduce{
 					position: relative;
@@ -367,7 +362,6 @@
 					.setting{
 						flex:2;
 						height: 200rpx;
-						
 					}
 				}
 			}

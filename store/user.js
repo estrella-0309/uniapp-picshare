@@ -9,16 +9,6 @@ const state={
 		avatar:null,
 		createTime:"1664769422055",
 		lastUpdateTime:"1664769422055"
-		
-		// id:"1582674375491063808",
-		// appKey:"d39fc189485c43d9a4b37463b238ac84",
-		// username:"jtw",
-		// password:null,
-		// sex:null,
-		// introduce:null,
-		// avatar:null,
-		// createTime:"1666173950442",
-		// lastUpdateTime:"1666173950442"
 	};
 	
 	const mutations={

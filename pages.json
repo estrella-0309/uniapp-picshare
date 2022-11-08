@@ -5,9 +5,7 @@
 	    "style" :                                                                                    
 	    {
 	        "navigationBarTitleText": "登录页面",
-			"navigationBarTextStyle":"white",
-	        "enablePullDownRefresh": false,
-			"navigationBarBackgroundColor":"#f6a54d"
+	        "enablePullDownRefresh": false
 	    }
 	    
 	},
@@ -80,6 +78,15 @@
 		    
 		}
         
+        ,{
+            "path" : "pages/setting/setting",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "设置",
+                "enablePullDownRefresh": false
+            }
+            
+        }
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
