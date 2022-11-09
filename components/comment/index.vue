@@ -45,7 +45,6 @@ export default {
 	},
 	methods: {
 		sendsecondmsg(data){
-			console.log(data,"msgsecond")
 			uni.$emit('sendsecondmsg',{
 				type:"second",
 				data:data,

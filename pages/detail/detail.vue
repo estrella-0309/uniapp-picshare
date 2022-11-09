@@ -59,6 +59,10 @@
 				</swiper>
 			</view>	
 		</view>
+		<div class="mask"></div>
+		<div class="commentCount">
+			评论数：{{commentnum}}
+		</div>
 		<comment :commentList="commentList" :id="this.data.id"></comment>
 		<view class="fixedbar" v-if="istrue"> 
 			<view class="like" @click="ClickLike(data,userid)">
@@ -126,6 +130,7 @@ export default {
 			page:1,
 			btn:true,
 			btnsmg:{},
+			commentnum:0,
 		}
 	},
 	onLoad(option) {
@@ -143,6 +148,7 @@ export default {
 		async initcomment(){
 			let result=await FirstComment(this.page,this.data.id)	
 			if(result.code=200){
+				this.commentnum=result.data.total;
 				this.commentList=result.data.records;
 			}
 			this.getSecond();
@@ -220,6 +226,21 @@ export default {
 		height:60rpx;
 	}
 	.app{
+		.mask{
+			width: 750rpx;
+			height: 30rpx;
+			background-color: #f0f0f0;
+		}
+		.commentCount{
+			font-size: 20px;
+			color: #5677fc;
+			width: 750rpx;
+			padding-left: 35rpx;
+			height: 80rpx;
+			line-height: 80rpx;
+			box-shadow: 0 1rpx 1rpx rgba(10, 16, 20, 0.24), 0 0 4rpx rgba(10, 16, 20, 0.12);
+			
+		}
 		.fixedbar{
 			width:750rpx;
 			position: fixed;
@@ -243,6 +264,7 @@ export default {
 			}
 		}
 		.index-list{
+
 			margin-bottom: 100rpx;
 			background-color: #fff;
 			width: 750rpx;

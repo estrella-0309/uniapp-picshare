@@ -5,7 +5,9 @@ const header={ Accept: "application/json, text/plain, */*",
 			  };
 const api=(Option)=>{
 	let baseURL='http://47.107.52.7:88/member'
+
 	return new Promise((resolve,reject)=>{
+		getApp().globalData.ApiCount++;
 		uni.showLoading({
 			title:'加载中'
 		})
@@ -17,8 +19,14 @@ const api=(Option)=>{
 			method:Option.method||'GET',
 			header:header,
 			data:Option.data||{},
-			success:res=>{		
-				uni.hideLoading()
+			success:res=>{
+				getApp().globalData.ApiCount--;
+				setTimeout(()=>{
+					if(getApp().globalData.ApiCount==0){
+						uni.hideLoading()
+					}
+				},500)
+				
 				resolve(res.data)
 			},
 			fail:err=>{

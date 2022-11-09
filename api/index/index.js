@@ -13,7 +13,6 @@ export const Login=async(username,password)=>{
 }
 //注册
 export const Register=async(username,password)=>{
-	console.log(username,password)
 	let result =await api({
 		url:'/photo/user/register',
 		method:'POST',
@@ -74,7 +73,6 @@ export const FirstComment=async(current,shareId)=>{
 }
 //发表一级评论
 export const AddFirstComment=async(content,shareId,userId,userName)=>{
-	console.log(content,shareId,userId,userName)
 	let result =await api({
 		url:'/photo/comment/first',
 		method:'POST',
@@ -268,7 +266,6 @@ export const Change=async(content,id,imageCode,pUserId,title)=>{
 }
 //删除图文分享
 export const DeleteShare=async(shareId,userId)=>{
-	console.log(shareId,userId)
 	let result =await api({
 		url:'/photo/share/delete',
 		"Content-Type": "application/x-www-form-urlencoded",

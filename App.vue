@@ -1,5 +1,8 @@
 <script>
 	export default {
+		globalData:{
+			ApiCount:0
+		},
 		onLaunch: function() {
 			console.log('App Launch')
 		},
@@ -15,7 +18,6 @@
 
 <style lang="scss">
 	@import 'uview-ui/index.scss';
-	/*每个页面公共css */
 	*{
 		margin: 0;
 		padding: 0;
@@ -24,7 +26,5 @@
 		box-sizing: border-box;
 	}
 	body{
-		// background-color:#DFE0EF ;
-		 // background-color:#409971 ;
 	}
 </style>

@@ -178,7 +178,6 @@
 				query.exec((res) => {
 					if (res && res[0]) {
 					  this.swiperHeight = res[0].height;
-					  console.log(this.swiperHeight,"height")
 					}
 				  });
 			},
