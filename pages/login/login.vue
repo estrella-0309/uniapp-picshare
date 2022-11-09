@@ -128,7 +128,7 @@
 				 border-radius: 25px;
 			 }
 			 .login{
-			    color:#49ad88;
+			    color:#f6a84e;
 				font-weight: 700;
 			 }
 			 .register{

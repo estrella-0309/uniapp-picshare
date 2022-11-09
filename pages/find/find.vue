@@ -11,7 +11,7 @@
 			<view class="header">
 				<view class="header-left" >
 					<view class="avator" >	
-						<u-avatar :text="item.username.substr(0,1)" size="50"></u-avatar>
+						<u-avatar :text="item.username.substr(0,1)" font-size="25" randomBgColor></u-avatar>
 					</view>					
 				</view>		  	
 				<view class="header-right">
