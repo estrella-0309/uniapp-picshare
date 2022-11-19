@@ -6,10 +6,13 @@
 					<view class="avator" >	
 						<u-avatar :text="data.username.substr(0,1)" size="50"></u-avatar>
 					</view>
-				  	<view class="username">{{data.username}}</view>	
-					<view class="createtime">
-							{{formatDateTime(data.createTime)}}发布
-					</view>					
+					<view class="usernameandcreate">
+						<view class="username">{{data.username}}</view>
+						<view class="createtime">
+								{{formatDateTime(data.createTime)}}发布
+						</view>
+					</view>
+				  					
 				</view>	
 				<view class="header-right">
 					<view class="focus">
@@ -268,42 +271,31 @@ export default {
 			margin-bottom: 100rpx;
 			background-color: #fff;
 			width: 750rpx;
+			
 			.header{
-				box-sizing: border-box;
-				width: 750rpx;
-				height: 150rpx;
+				width: 690rpx;
+				display: flex;
+				margin: 0 auto;
+				align-items:center;
+				justify-content: space-between;
 				.header-left{
-					float: left;
-					width: 300rpx;
-					padding: 30rpx 30rpx;
-					position: absolute;
-					.avator{
-						color: red;
-						span {			
-						}			
-					}
-					.username{
-						width: 100rpx;
-						font-size: 30px;
-						font-weight: 700;
-						position: relative;
-						top:-120rpx;
-						left:130rpx;
-						display: inline-block;
-					}
-					.createtime{
-						font-size: 14px;
-						color: #ccc;
-						position: relative;
-						top:-60rpx;
-						left:30rpx;
-						display: inline-block;
+					display: flex;
+					.usernameandcreate{
+						margin-left: 30rpx;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-around;
+						.username{
+							font-size: 20px;
+							font-weight: 700;
+						}
+						.createtime{
+						    font-size: 14px;
+						    color: #ccc;
+						}
 					}
 				}
-				.header-right{
-					float: right;
-					margin:30rpx 30rpx 0 0;
-				}
+				
 			}
 			.picture{	
 				height: 450rpx;

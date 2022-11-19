@@ -164,16 +164,13 @@ export default {
 			width: 750rpx;
 			.header{
 				box-sizing: border-box;
-				width: 400rpx;
+				width: 750rpx;
 				height: 150rpx;
 				display: flex;
 				.header-left{
-					width: 300rpx;
-					padding: 30rpx 30rpx;
-					flex:1;		
+					padding: 30rpx 30rpx;	
 				}
 				.header-right{
-					flex:3;
 					margin-top: 30rpx;
 					.username{
 						font-size: 20px;

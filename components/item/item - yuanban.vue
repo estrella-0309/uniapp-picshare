@@ -3,23 +3,20 @@
 		<view v-if="!list.length>0">
 			<u-empty text="没有内容" mode="list" style="width:750rpx;"></u-empty>
 		</view>
-		<!-- <view class="list" v-for="(item,index) in list" :key="index">
-				<image :src="item.imageUrlList[0]" style="width: 100%;"></image>		
+		<view class="list" v-for="(item,index) in list" :key="index">
+				<image :src="item.imageUrlList[0]" style="width: 100%;"></image>
+			<view class="list-con">
+					<view class="list-foot">			
+						<view class="title">{{item.title}}</view>
+						<view class="content">
+								{{item.content}}
+								<u-icon   style="float: right;" v-if="type.txt=='My'" name="trash"  size="25"  @click="Delete(item)"></u-icon>		
+						</view>
+					</view>
+			</view>
+				
 		</view>
-			 -->
-			 <view class="list">
-			   <view class='list-half'>
-			       <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 !== 0">
-			         <image   class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="widthFix"></image> 
-			       </view> 
-			     </view>
-			     <view class='list-half' style="">
-			         <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 == 0">
-			           <image class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="widthFix"></image>
-			         </view>
-			       </view>
-			     </view>
-			   </view>
+			
 	</view>
 </template>
 
@@ -91,37 +88,16 @@
 	 .box{
 		 display: flex;
 		  flex-wrap: wrap;
-		 // .list{
-			// background-color:#DFE0EF ;
-			// margin-right:13rpx;
-			// margin-bottom: 20rpx;
-			// width:49%;
-			// border-radius:10px ;
-		 // }
-		 // .list:nth-child(even){
-			// margin-right:0;
-		 // }
-		 .list {
-		    padding: 20rpx 0;
-		    display: flex;
-		    justify-content: space-between;
-		  }
-		  .list .list-half {
-			margin-left: 15rpx;
-		    width: 346rpx;
-		    height: 100%;
-		    box-sizing: border-box;
-		  }
-		  image {
-		    height: 100%;
-			min-height: 200px;
-			max-height: 300px;
-		  }
-		  .list-half .card {
-		    border-radius: 20rpx;
-		    overflow: hidden;
-		    margin-bottom: 15rpx;
-		  }
+		 .list{
+			background-color:#DFE0EF ;
+			margin-right:13rpx;
+			margin-bottom: 20rpx;
+			width:49%;
+			border-radius:10px ;
+		 }
+		 .list:nth-child(even){
+			margin-right:0;
+		 }
 		 .title{
 			font-size:23px;
 		 }
