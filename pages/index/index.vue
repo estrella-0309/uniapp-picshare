@@ -155,16 +155,17 @@ export default {
 		height:60rpx;
 	}
 	.app{
-		float: left;
 		background-color: #f0f0f0;
 		.index-list{
+			margin: 0 auto;
 			margin-bottom: 50rpx;
 			background-color: #fff;
-			float: left;
-			width: 750rpx;
+			width: 700rpx;
+			border-radius: 20px;
+			box-shadow: 0 5rpx 5rpx rgba(10, 16, 20, 0.24), 0 0 16rpx rgba(10, 16, 20, 0.12);
+			  	text-decoration: none;
 			.header{
 				box-sizing: border-box;
-				width: 750rpx;
 				height: 150rpx;
 				display: flex;
 				.header-left{
@@ -183,9 +184,8 @@ export default {
 				}
 			}
 			.picture{
-				float: left;
 				width: 730rpx;
-				margin: 0 35rpx;
+				margin: 0 20rpx;
 				flex-wrap: wrap;
 				image{
 					margin-right: 20rpx;
@@ -194,35 +194,33 @@ export default {
 				}
 			}
 			.footer{
-				float: left;
-				width: 750rpx;
+				width: inherit;
 				margin-top: 20rpx;
 				padding-left: 35rpx;
+				display: flex;
+				justify-content:space-between;
 				.footer-left{
-					float: left;
-				}
-				.title{
-					font-size: 20px;
-					font-weight: 700;
-				}
-				.content{
-					padding-top: 20rpx;
-					width: 700rpx;
-					color: #8c8c8c;
-				}
+					
+					.title{
+						font-size: 20px;
+						font-weight: 700;
+					}
+					.content{
+						padding-top: 20rpx;
+						color: #8c8c8c;
+					}
+				}			
 				.goodandcollect{
-					float: right;
-					margin-right: 70rpx;
+					align-self: flex-end;
+					display: flex;
+					margin-right: 60rpx;
 					.good{
-						float: left;
 						margin-left: 30rpx;
 						.goodnums{
-							float: left;
 							margin-top: 26rpx;
 							margin-right: 10rpx;
 						}
 						.collectnums{
-							float: left;
 							margin-top: 26rpx;
 							margin-right: 10rpx;
 						}

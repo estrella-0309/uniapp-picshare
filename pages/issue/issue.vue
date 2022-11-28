@@ -73,7 +73,6 @@
   </view>
 </template>
 <script>
-import { pathToBase64, base64ToPath } from 'node_modules/image-tools/index.js'
 import {mapState} from "vuex"
 import {Upload,AddShare,Saveimg,GetSave,Change} from '@/api/index/index.js'
 export default {
@@ -139,7 +138,6 @@ export default {
 			  if (this.uploadPicsList.length > 9) {
 				this.uploadPicsList = this.uploadPicsList.slice(0, 9);
 			  }
-			  console.log(this.uploadPicsList)
 			},
 		  });
 		},
@@ -199,32 +197,22 @@ export default {
 			 this.getsave()			 
 		},
 		async uploaded(){
-			let templist=this.uploadPicsList.map(item=>{
-				return pathToBase64(item.path)
-				// return {
-				// 	name:'fileList',
-				// 	uri:temp
-				// }
+			const upimgslist=this.uploadPicsList.map(item=>{
+				return {
+					  name:'fileList',
+					  uri:item.path
+				}
 			})
-			let upimgslist=[];
-			for(let item of templist){
-				upimgslist.push({
-					name:'fileList',
-					uri:await item
-				})
-			}
 			let result=JSON.parse(await Upload(upimgslist));
 			if(result.code==500){
-				uni.showToast({
-					title: '图片格式不支持',
-					icon: 'error',
-				})
-				this.uploadStatus = false
-				return
+							 uni.showToast({
+									title: '图片格式不支持',
+									icon: 'error',
+								})
+								this.uploadStatus = false
+								return
 			}
 			this.imgCode=result.data.imageCode;
-		},
-		async ChangeBase64(item){
 		},
 		async sendFeed() {
 			this.uploadStatus = true
