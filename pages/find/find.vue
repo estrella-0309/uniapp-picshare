@@ -182,7 +182,7 @@ export default {
 			}
 			.picture{
 				width: 730rpx;
-				margin: 0 35rpx;
+				margin: 0 20rpx;
 				flex-wrap: wrap;
 				image{
 					margin-right: 20rpx;
