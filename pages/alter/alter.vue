@@ -102,8 +102,7 @@
 				else{
 					tempname=this.user
 				}
-				
-				if(this.urls!=null){
+				if(this.urls!=null&&this.urls.substr(0,4)!='http'){
 					let imgurl=[{
 						name:'fileList',
 						uri:this.urls
@@ -112,6 +111,7 @@
 					this.urls= imgresult.data.imageUrlList[0]
 				}
 				let result=await Update(this.urls,this.id,tempintr,tempsex,tempname)
+				console.log(result)
 				if(result.code==200){
 					
 					let data={

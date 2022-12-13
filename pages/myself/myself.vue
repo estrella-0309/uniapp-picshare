@@ -12,26 +12,26 @@
 			<view class="header">
 				<view class="information">
 					<view class="basis">
-						<view class="basis-left">
 							<view class="avator">
-								<img src="static/default.jpg" alt="" v-if="avatar==null">
-								<img :src="avatar" alt="" v-else>
+								<u-avatar src="static/default.jpg" size="75" v-if="avatar==null"></u-avatar>
+								  <u-avatar :src="avatar" size="75" v-else></u-avatar>
 							</view>
-							<view class="username">
-								{{username}}
-							</view>
-							<view class="id">
-								id:{{id}}
-							</view>
-							<view class="sex">
-								<view class="text">{{sexx}}</view>
-							</view>
-							<view class="create">
-								<view class="text">
-									{{getDate(lastUpdateTime)}}
+							<view class="basismsg">
+								<view class="username">
+									{{username}}
+								</view>
+								<view class="">
+									<view class="sex">
+										<view class="text">{{sexx}}</view>
+									</view>
+									<view class="create">
+										<view class="text">
+											{{getDate(lastUpdateTime)}}
+										</view>
+									</view>
 								</view>
 							</view>
-						</view>
+							
 					</view>
 					<view class="introduce">
 						<view class="" v-if="introduce!==null">
@@ -57,7 +57,7 @@
 							<view>收藏</view>
 						</view>
 						<view class="setting"> 	
-							<view class="text" @click="Toalter">编辑资料</view>
+							<view class="text" @click="Toalter" style="height: 100%;">编辑资料</view>
 						</view>
 					</view>
 				</view>
@@ -266,7 +266,6 @@
 	}	
 	.text{
 		width: 80%;
-		height: 40%;
 		border-radius: 40px;
 		display: flex;
 		justify-content: center;
@@ -279,77 +278,61 @@
 		.header{
 			background-color: #555360;
 			width: 750rpx;
-			height: 600rpx;
-			position: absolute;
+			height: 550rpx;
+			display: flex;			
 			.information{
-				margin-top:70rpx;
 				width: 750rpx;
-				height: 680rpx;
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				margin-left: 40rpx;
+				gap: 40px;
 				.basis{
 					width: 750rpx;
-					height: 250rpx;
-					position: absolute;
-					.basis-left{
-						width: 500rpx;
-						height: 200rpx;
-						margin: 25rpx 30rpx;
-						position: absolute;
-						margin-left: 20rpx;
-						.avator{
-							position: relative;
-							top:40rpx;
-					
-							width: 150rpx;
-							height: 150rpx;
-							img{
-								width: inherit;
-								border-radius:50% ;
-							}
-						}
-						.username{
-							position: relative;
-							top:-120rpx;
-							left:190rpx;
-							width: 150rpx;
-							height: 50rpx;
-							color: #fff;
-							font-weight: 700;
-							font-size: 20px;
-						}
-						.id{
-							position: relative;
-							top:-115rpx;
-							left:190rpx;
-							font-size: 12px;
-							color: #ccc;
-						}
-						.sex{
-							position: relative;
-							top:-85rpx;
-							left:190rpx;
-							color: #fff;
-							width: 80rpx;
-						
-						}
-						.create{
-							position: relative;
-							top: -63px;
-							left: 280rpx;
-							width: 150px;
-							color: #fff;
+					display: flex;
+					.avator{
+						width: 150rpx;
+						height: 150rpx;
+						img{
+							width: inherit;
+							border-radius:50% ;
 						}
 					}
+					.basismsg{
+						margin-left: 20rpx;
+						flex:2;
+						display: flex;
+						flex-direction: column;
+						justify-content: space-between;
+						text-align: center;
+						view {
+							display: flex;
+						}
+						.username{
+							padding-left:20rpx;
+							color: #fff;
+							font-weight: 700;
+							font-size: 25px;
+							
+						}
+						.sex{
+							width: 100rpx;
+							color: #fff;
+						}
+						.create{
+							width: 150px;
+						}
+					}
+					
 				}				
 				.introduce{
-					position: relative;
-					top: 280rpx;
-					margin-left: 40rpx;
+					margin-left: 10rpx;
 					color: #fff;
 				}
 				.mylists{
-					position: relative;
-					top: 350rpx;
 					display:flex;
+					margin-bottom: 30px;
+					margin-left: -40rpx;
 					view{
 						color: #fff;
 						text-align: center;
@@ -360,15 +343,12 @@
 					}
 					.setting{
 						flex:2;
-						height: 200rpx;
 					}
 				}
 			}
 		}
 		.footer{
 			width: 750rpx;
-			position: relative;
-			top: 600rpx;
 		}
 	}
 </style>

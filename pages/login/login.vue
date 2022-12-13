@@ -39,7 +39,7 @@
 				let result=await Login(this.username,this.password)
 				if(result.code==200){
 					this.$store.dispatch("getUserList",result.data);
-					
+					console.log(result.data)
 					uni.showToast({
 						title:'登录成功',
 						icon:'success',

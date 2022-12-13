@@ -7,10 +7,12 @@ const api=(Option)=>{
 	let baseURL='http://47.107.52.7:88/member'
 
 	return new Promise((resolve,reject)=>{
+		if(getApp().globalData.ApiCount==0){
+			uni.showLoading({
+				title:'加载中'
+			})
+		}
 		getApp().globalData.ApiCount++;
-		uni.showLoading({
-			title:'加载中'
-		})
 		if(Option.hasOwnProperty('Content-Type')){
 			header['Content-Type']=Option["Content-Type"]
 		}
@@ -20,13 +22,12 @@ const api=(Option)=>{
 			header:header,
 			data:Option.data||{},
 			success:res=>{
-				getApp().globalData.ApiCount--;
 				setTimeout(()=>{
+					getApp().globalData.ApiCount--;
 					if(getApp().globalData.ApiCount==0){
 						uni.hideLoading()
 					}
 				},500)
-				
 				resolve(res.data)
 			},
 			fail:err=>{

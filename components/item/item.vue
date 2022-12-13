@@ -6,14 +6,14 @@
 			 <view class="list">
 			   <view class='list-half'>
 			       <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 !== 0">
-			         <image   class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
-					  <u-icon    class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25"  color="#ccc" @click="Delete(item)"></u-icon>	
+			         <image  @click="Todetail(item)"   class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
+					  <u-icon    class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25"  color="#ccc" @click.stop="Delete(item)"></u-icon>	
 			       </view> 
 			     </view>
 			     <view class='list-half' style="margin-left: 15px;" >
 			         <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 == 0">
-			           <image class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
-					   <u-icon class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25" color="#ccc"  @click="Delete(item)"></u-icon>	
+			           <image class='card' @click="Todetail(item)"  :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
+					   <u-icon class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25" color="#ccc"  @click.stop="Delete(item)"></u-icon>	
 			         </view>
 			       </view>
 			     </view>
@@ -45,6 +45,14 @@
 						return i.id!=item.id
 					})
 				}
+			},
+			Todetail(item){
+				if(item.username==null){
+					item.username=this.username;
+				}
+				uni.navigateTo({
+					url:'/pages/detail/detail?item='+JSON.stringify(item),
+				});
 			},
 			async getData(){
 				let result;
