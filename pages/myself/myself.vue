@@ -286,7 +286,7 @@
 				flex-direction: column;
 				justify-content: flex-end;
 				margin-left: 40rpx;
-				gap: 40px;
+				gap: 30px;
 				.basis{
 					width: 750rpx;
 					display: flex;
