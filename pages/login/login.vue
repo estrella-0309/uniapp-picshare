@@ -1,10 +1,10 @@
 <template>
 	<view class="box">
 		<view class="text">
-			SIGN IN
+			登录
 		</view>
 		<view class="user">
-			<input type="text" focus placeholder="用户名" v-model="username" adjustResize placeholder-style="color:#76c2a5"/>
+			<input type="text" focus placeholder="用户名" v-model="username" adjustResize />
 			<input :type="type" placeholder="输入密码" v-model="password"  class="active"/>
 			<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
 			<view class="user-forget">
@@ -25,8 +25,8 @@
 			return {
 				showtexteare:false,
 				flag:false,
-				username:"jtw",
-				password:"123",
+				username:"",
+				password:"",
 			}
 		},
 		methods: {
@@ -51,6 +51,14 @@
 						})
 					},1000)
 				}
+				else{
+					uni.showToast({
+						title:'用户名或密码错误',
+						icon:'error',
+						duration: 1000
+					})	
+					setT
+				}
 				
 			},
 		},
@@ -69,7 +77,7 @@
 <style lang="scss" scoped>
 	
 	::-webkit-input-placeholder{
-		color:#76c2a5;
+		color:gray;
 	}
 	.active{
 		box-sizing: border-box;

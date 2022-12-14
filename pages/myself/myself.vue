@@ -133,6 +133,14 @@
 				}
 			)
 		},
+		onPullDownRefresh() {
+			this.getdefaultData();
+			uni.$emit("UpdateData");
+			this.setSwiperHeight()
+				setTimeout(function () {
+					uni.stopPullDownRefresh();
+				}, 1000);
+		},
 		async onLoad(){
 			if(this.sex!==null){
 				this.sexx=this.sex==1?'男':'女';

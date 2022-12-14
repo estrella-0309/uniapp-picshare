@@ -15,6 +15,7 @@ export const Login=async(username,password)=>{
 export const Register=async(username,password)=>{
 	let result =await api({
 		url:'/photo/user/register',
+		'Content-Type':'application/json',
 		method:'POST',
 		data:{
 			username:username,password:password
@@ -330,6 +331,21 @@ export const Saveimg=async(content,imageCode,pUserId,title)=>{
 	})
 	return result
 }
+export const HasSaveIdSaveImg=async(content,imageCode,pUserId,title,id)=>{
+	let result =await api({
+		url:'/photo/share/save',
+		method:'POST',
+		data:{
+			content:content,
+			imageCode:imageCode,
+			pUserId:pUserId,
+			title:title,
+			id:id
+		},
+	})
+	return result
+}
+
 //修改用户信息
 export const Update=async(avatar,id,introduce,sex,username)=>{
 	let result =await api({
@@ -346,3 +362,4 @@ export const Update=async(avatar,id,introduce,sex,username)=>{
 	})
 	return result
 }
+

@@ -5,15 +5,15 @@
 		</view>
 			 <view class="list">
 			   <view class='list-half'>
-			       <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 !== 0">
+			       <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 == 0">
 			         <image  @click="Todetail(item)"   class='card' :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
-					  <u-icon    class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25"  color="#ccc" @click.stop="Delete(item)"></u-icon>	
+					  <u-icon    class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25"  color="#ccc" @click="Delete(item)"></u-icon>	
 			       </view> 
 			     </view>
 			     <view class='list-half' style="margin-left: 15px;" >
-			         <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 == 0">
+			         <view class="item" v-for="(item,index) in list" :key="index" v-if="index%2 !== 0">
 			           <image class='card' @click="Todetail(item)"  :src="item.imageUrlList[0]" style="width: 346rpx;" mode="aspectFill"></image>
-					   <u-icon class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25" color="#ccc"  @click.stop="Delete(item)"></u-icon>	
+					   <u-icon class="deleteicon" v-if="type.txt=='My'" name="trash"  size="25" color="#ccc"  @click="Delete(item)"></u-icon>	
 			         </view>
 			       </view>
 			     </view>
@@ -36,6 +36,12 @@
 		},
 		mounted() {
 			this.getData()
+			let _this=this;
+			uni.$on("UpdateData",()=>{	
+				_this.page=1;
+				_this.list=[];
+				_this.getData()
+			})
 		},
 		methods:{
 			async Delete(item){
@@ -66,8 +72,12 @@
 					case 'Collect':
 					result=await GetCollect(this.page,this.userid);
 					break;
-				}			
+				}	
+				console.log(result,this.type.txt)
 				if(result.code==200){
+					if(result.data==null){
+						return;
+					}
 					if(result.data.records.length==0){
 						uni.showToast({
 										title:"数据到底了",

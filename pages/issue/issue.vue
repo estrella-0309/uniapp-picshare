@@ -2,20 +2,24 @@
 	<view class="share">
 		<view class="msg">
 			<view class="title">
-				标题：
+				标题
 				<u-input
 				  placeholder="请输入内容"
 				  v-model="title"
 				  class="title-input">
 				</u-input>
 			</view>
-			<view class="content">
-				内容：
+		<!-- 	<view class="content">
+				内容
 				<u-input
 				  placeholder="请输入内容"
 				  v-model="content"
 				  class="title-input">
 				</u-input>
+			</view> -->
+			<view class="content">
+				内容
+				<textarea placeholder="请输入内容" class="content-textarea" v-model="content"  placeholder-style="color:#ccc4cf;"></textarea>
 			</view>
 		</view>
 		<view class="pics">
@@ -42,7 +46,7 @@
 			</view>
 		
 		</view>
-		<uni-popup ref="popup" type="bottom" background-color="#fff">
+		<uni-popup ref="popup" type="bottom" background-color="#f0f0f0">
 			<view class="popbox">
 				<u-empty text="暂无保存" mode="list" v-if="Save==null" style="height: 40%;"></u-empty>
 				<view v-for="item in Save" :key="item.id" v-else>
@@ -63,6 +67,14 @@
 							shape="square" 
 							type="primary" 
 							style="margin-top: 65rpx; width: 60%;" 
+							@click="AlterSave(item)">	
+								修改
+						</u-button>
+						<u-button
+							size="mini" 
+							shape="square" 
+							type="primary" 
+							style="margin-top: 65rpx; width: 60%;" 
 							@click="saveissuebox(item)">	
 								发布
 						</u-button>
@@ -74,18 +86,19 @@
 </template>
 <script>
 import {mapState} from "vuex"
-import {Upload,AddShare,Saveimg,GetSave,Change} from '@/api/index/index.js'
+import {Upload,AddShare,Saveimg,GetSave,Change,HasSaveIdSaveImg} from '@/api/index/index.js'
 export default {
 	data() {
 		return {
-		  title:'test',
-		  content:'test',
+		  title:'',
+		  content:'',
 		  uploadPicsList: [],
 		  uploadStatus: false,
 		  imgCode:'',
 		  show:true,
 		  Save:[],
 		  page:1,
+		  SaveId:null,
 		}
 	},
 	onLoad(){
@@ -103,11 +116,26 @@ export default {
 				this.getsave()
 			}
 		},
+		AlterSave(item){
+			console.log(item)
+			this.$refs.popup.close()
+			this.title=item.title;
+			this.content=item.content;
+			this.uploadPicsList=[];
+			this.SaveId=item.id;
+			this.imgCode=item.imageCode;
+			for(let i of item.imageUrlList){
+							this.uploadPicsList.push({
+								path:i,
+							})
+						}
+		},
 		open(){
 			this.$refs.popup.open('buttom')
 		},
 		async getsave(){
 			let result=await GetSave(this.page,this.id);
+			console.log(result)
 			if(result.code==200){
 				if(result.data==null){
 					this.Save=null
@@ -158,7 +186,7 @@ export default {
 			
 		  this.uploadPicsList.splice(index, 1);
 		},
-		// 发布动态
+		// 保存动态
 		async saveissue(){
 			this.uploadStatus = true
 			if (this.title == "") {
@@ -191,19 +219,44 @@ export default {
 			  this.uploadStatus = false
 			  return
 			}
+			
 			await this.uploaded()
-			let saveresult=await Saveimg(this.content,this.imgCode,this.id,this.title);
+			let saveresult=null;
+			console.log(this.SaveId,this.imgCode)
+			if(this.SaveId==null){
+				saveresult=await Saveimg(this.content,this.imgCode,this.id,this.title);
+			}
+			else{
+				saveresult=await HasSaveIdSaveImg(this.content,this.imgCode,this.id,this.title,this.SaveId);
+			}
+			if(saveresult.code==200){
+				this.uploadStatus=false;
+				this.title='',
+				this.content='',
+				this.uploadPicsList=[];
+				this.SaveId=null;
+			}
+			
 			this.uploadStatus = false
 			 this.getsave()			 
 		},
 		async uploaded(){
-			const upimgslist=this.uploadPicsList.map(item=>{
-				return {
-					  name:'fileList',
-					  uri:item.path
+			let upimgslist=[];
+			for(let i of this.uploadPicsList){
+				if(i.path.substr(0,4)!=='http'){
+					upimgslist.push({
+						name:'fileList',
+						uri:i.path
+					})
 				}
-			})
+			}
+			if(upimgslist.length==0){
+				return
+			}
 			let result=JSON.parse(await Upload(upimgslist));
+			if(result.code==200){
+				this.imgCode=result.data.imageCode;
+			}
 			if(result.code==500){
 							 uni.showToast({
 									title: '图片格式不支持',
@@ -212,7 +265,7 @@ export default {
 								this.uploadStatus = false
 								return
 			}
-			this.imgCode=result.data.imageCode;
+			
 		},
 		async sendFeed() {
 			this.uploadStatus = true
@@ -247,7 +300,14 @@ export default {
 			  return
 			}
 			await this.uploaded();
-			let addresult=await AddShare(this.content,this.imgCode,this.id,this.title);
+			let addresult;
+			if(this.SaveId==null){
+				addresult=await AddShare(this.content,this.imgCode,this.id,this.title);
+			}
+			else{
+				addresult=await Change(this.content,this.SaveId,this.imageCode,this.id,this.title);
+			}
+			console.log(addresult)
 			if(addresult.code==200){
 				uni.hideToast();
 				uni.showToast({
@@ -273,15 +333,22 @@ export default {
 	.share {
 		width: 750rpx;
 		margin:100rpx 30rpx;
-		.title-input{
-			position: relative;
-			top: -55rpx;
-			left: 80rpx;
-			width: 73%;
-		}
-		.content{
-			margin-top: 30rpx;
-		}
+		.title{
+					.title-input{
+						margin: 10px 0;
+						width: 78%;
+					}
+				}
+				
+				.content{
+					.content-textarea{
+						padding:3px 0 0 5px;
+						border: 0.5px solid #dadbde;
+						border-radius: 4px;
+						height: 100px;
+						margin-top: 10px;
+					}
+				}
 	}
 
 	.pics {
@@ -310,7 +377,6 @@ export default {
 				background-color: rgba($color: #333, $alpha: 0.6);
 				border-bottom-left-radius: 100%;
 				padding: 10rpx 10rpx 16rpx 16rpx;
-				z-index: 999;
 			}
 		}
 
@@ -366,14 +432,17 @@ export default {
 			}
 		}
 	}
-	.popbox>view{
+	.popbox{
+		max-height: 400px;
+		overflow-y: scroll;
+		&>view{
 		width: 750rpx;
 		height: 200rpx;
 		background-color: #f0f0f0;
 		margin: 10rpx 0rpx;
 		display: flex;
 		.images{
-			margin-left: 40rpx;
+			margin-left: 10rpx;
 			width: 200rpx;
 			height: 200rpx;
 			flex:1;
@@ -388,12 +457,18 @@ export default {
 			.content{
 				color: #b2b2b2;
 				margin-left:40rpx;
-				margin-top: 10rpx;
+				margin-top: 30rpx;
 			}
 		}
 		.box-issue{
 			flex:1;
 			margin-right: 50rpx;
+			display: flex;
+			justify-content: space-around;
+			button {
+				margin-left: 10px;
+			}
 		}
 	}
+}
 </style>

@@ -2,7 +2,7 @@
 	<view>
 		<view class="box">
 			<view class="text">
-				resgister
+				注册
 			</view>
 			<view class="user">
 				<input 
@@ -11,26 +11,24 @@
 					placeholder="用户名" 
 					v-model="username" 
 					adjustResize 
-					placeholder-style="color:#76c2a5"/>
-				<input 
-					:type="type" 
-					placeholder="输入密码" 
-					v-model="password" 
-					placeholder-style="color:#76c2a5" 
-					style="margin-top: 70rpx;" 
-					class="active"/>	
+					/>
+					<input
+						:type="type" 
+						placeholder="请输入密码" 
+						v-model="password" 
+						style="margin-top: 70rpx;" 
+						class="active"/>		
 				<u-icon :name="Icon" size="20" class="eyes" @click="flag=!flag"></u-icon>
 				<input 
-					:type="type2" 
+					:type="type" 
 					placeholder="请再次输入密码" 
 					v-model="password2" 
-					placeholder-style="color:#76c2a5" 
 					style="margin-top: 70rpx;" 
 					class="active"/>		
-				<u-icon :name="Icon2" size="20" class="eyes2" @click="flag2= !flag2"></u-icon>
+				<u-icon :name="Icon" size="20" class="eyes2" @click="flag=!flag"></u-icon>
 			</view>
 			<view class="btn">
-				<button class="register" @click="resgister" style="background-color: #fff;color: #409971;">注册</button>
+				<button class="register" @click="resgister" style="background-color: #fff;color: #f6a84e;">注册</button>
 				<button class="register" @click="tologin">返回登录</button>
 			</view>
 		</view>
@@ -43,10 +41,10 @@ import{Register} from '@/api/index/index.js'
 		data() {
 			return {
 				flag:false,
-				flag2:false,
-				username:"estrella",
-				password:"123",
-				password2:"123",
+				
+				username:"",
+				password:"",
+				password2:"",
 			}
 		},
 		methods: {
@@ -94,12 +92,7 @@ import{Register} from '@/api/index/index.js'
 				Icon(){
 					return !this.flag?"eye":"eye-off"
 				},
-			type2(){
-					return this.flag2?"text":"password";
-				},
-				Icon2(){
-					return !this.flag2?"eye":"eye-off"
-				}
+
 		},
 		
 	}
@@ -107,15 +100,15 @@ import{Register} from '@/api/index/index.js'
 
 <style lang="scss" scoped>
 	::-webkit-input-placeholder{
-		color:#76c2a5;
+		color:grey;
 	}
 	.active{
 		box-sizing: border-box;
 		padding: 5px;
-		color: #fff;
+		// color: #fff;
 		width: 600rpx;
 		height: 100rpx;
-		background-color:#218c64;
+		background-color:rgba(255, 255, 255, 0.5);
 		margin: 30rpx 80rpx;
 		border-radius: 20px;
 		padding-left: 60rpx;

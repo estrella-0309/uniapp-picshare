@@ -113,50 +113,31 @@
 				let result=await Update(this.urls,this.id,tempintr,tempsex,tempname)
 				console.log(result)
 				if(result.code==200){
-					
 					let data={
 						id:this.id,
 						appKey:this.appKey,
-						username:tempsex,
-						password:null,
-						createTime:"1664769422055",
-						lastUpdateTime:"1664769422055",
 						username:tempname,
+						password:null,
 						sex:tempsex,
 						introduce:tempintr,
 						avatar:this.urls,
-						lastUpdateTime:new Date().getTime()
-					}
+						createTime:this.createTime,
+						lastUpdateTime:this.lastUpdateTime};
+						console.log(data)
 					this.$store.dispatch("getUserList",data);
+			
 					uni.showToast({
 						title:"修改成功",
 						icon: "success",
 						duration: 1000,
 					})
-				}	
-			},
-			async alter(){
-				let result=await Update(this.avatar,this.userid,this.introduce,this.sex,this.username)
-				let data={
-					
-				}
-				if(result.code==200){
-					this.$store.dispatch("getUserList",);
-					
-					uni.showToast({
-						title:'修改成功',
-						icon:'success',
-						duration: 1000
-					})	
 					setTimeout(function(){
 						uni.switchTab({
 							url:"/pages/myself/myself"
 						})
 					},1000)
-				}
-			},
-
-			
+				}	
+			},		
 		},
 		computed: {
 			...mapState({
@@ -165,6 +146,9 @@
 				sex:state=>state.user.sex,
 				introduce:state=>state.user.introduce,
 				avatar:state=>state.user.avatar,
+				createTime:state=>state.user.createTime,
+				lastUpdateTime:state=>state.user.lastUpdateTime,
+				appKey:state=>state.user.appKey,
 			}),
 		},
 	}
